@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Preview the Simple Store account registration form.">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Create an Account | Simple Store</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/main.js" defer></script>
+  </head>
+  <body>
+    <!-- The skip link lets keyboard users bypass the repeated navigation. -->
+    <a href="#main-content">Skip to main content</a>
+
+    <header>
+      <a href="index.html">Simple Store</a>
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#products">Products</a></li>
+          <li><a href="cart.html">Cart</a></li>
+          <li><a href="login.html">Log in</a></li>
+          <li><a href="register.html" aria-current="page">Register</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Each page has one main region and one h1 heading. -->
+    <main id="main-content" tabindex="-1">
+      <h1>Create your account</h1>
+      <p id="register-note">Account preview: registration is not connected yet. Fields are disabled, and no personal information is collected.</p>
+      <!-- HTML checks are a usability aid; the future server must validate inputs too. -->
+      <form action="register.html" method="post" aria-describedby="register-note">
+        <fieldset disabled>
+          <legend>Account details</legend>
+          <p>
+            <label for="register-name">Full name (required)</label>
+            <input id="register-name" name="fullName" type="text" autocomplete="name" maxlength="100" required>
+          </p>
+          <p>
+            <label for="register-email">Email address (required)</label>
+            <input id="register-email" name="email" type="email" autocomplete="email" maxlength="254" required>
+          </p>
+          <p id="password-help">Use a long, unique password of at least 12 characters.</p>
+          <p>
+            <label for="register-password">Password (required)</label>
+            <input id="register-password" name="password" type="password" autocomplete="new-password" minlength="12" maxlength="128" aria-describedby="password-help" required>
+          </p>
+          <p>
+            <label for="confirm-password">Confirm password (required)</label>
+            <input id="confirm-password" name="confirmPassword" type="password" autocomplete="new-password" minlength="12" maxlength="128" required>
+          </p>
+          <!-- Matching passwords must be checked when behavior is implemented. -->
+          <button type="submit">Create account</button>
+        </fieldset>
+        <p id="register-error" role="alert" hidden></p>
+      </form>
+      <p>Already have an account? <a href="login.html">View the login page</a>.</p>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Simple Store. Built by Sheheryar Ahmad.</p>
+      <nav aria-label="Footer navigation">
+        <a href="index.html#about">About the store</a>
+        <a href="index.html#products">Browse products</a>
+      </nav>
+      <a href="#main-content">Back to main content</a>
+    </footer>
+  </body>
+</html>

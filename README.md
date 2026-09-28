@@ -26,8 +26,8 @@ This repository contains **Task 1: Simple E-Commerce Store** for the CodeAlpha F
 
 | Item | Current state |
 | --- | --- |
-| Development stage | HTML storefront foundation |
-| Available page | Homepage with three sample product listings |
+| Development stage | Initial HTML page structure complete |
+| Available pages | Homepage, product details, cart, checkout, confirmation, login, and registration |
 | Visual design | Browser-default appearance; custom styling is pending |
 | Shopping functionality | Not available yet; cart buttons are disabled |
 | Backend and database | Not implemented |
@@ -40,7 +40,9 @@ This repository contains **Task 1: Simple E-Commerce Store** for the CodeAlpha F
 ### Available now
 
 - **Product listings:** product names, descriptions, and prices for an Everyday Backpack, Study Notebook, and Desk Lamp.
-- **Store navigation:** links to the home, products, and about sections.
+- **Store navigation:** connected shopping and account pages, with matching product detail anchors.
+- **Shopping previews:** consistent example cart totals, checkout fields, and an order confirmation layout.
+- **Account forms:** labelled registration and login fields, disabled until secure endpoints exist.
 - **Semantic structure:** distinct header, navigation, main content, product articles, and footer.
 - **Keyboard navigation groundwork:** a skip link that moves focus to the main content.
 - **Page metadata:** a descriptive title, meta description, document language, and viewport setting.
@@ -113,6 +115,12 @@ CodeAlpha_Simple-E-Commerce-Store/
 | Path | Responsibility |
 | --- | --- |
 | [index.html](index.html) | Homepage markup, content, navigation, and product listings |
+| [product.html](product.html) | All three product detail sections, each with its own anchor |
+| [cart.html](cart.html) | Example basket, quantity controls, totals, and a hidden empty state |
+| [checkout.html](checkout.html) | Disabled contact, delivery, and payment-preview form |
+| [order-confirmation.html](order-confirmation.html) | Clearly labelled example order confirmation |
+| [login.html](login.html) / [register.html](register.html) | Disabled account forms with labels and autocomplete hints |
+| [docs/HTML_GUIDE.md](docs/HTML_GUIDE.md) | Page-by-page explanation and study exercises |
 | [assets/css/style.css](assets/css/style.css) | Dedicated stylesheet; currently a placeholder comment |
 | [assets/js/main.js](assets/js/main.js) | Dedicated script; currently a placeholder comment |
 | `assets/images/` | Reserved for product images; `.gitkeep` retains the empty folder |
@@ -121,7 +129,7 @@ CodeAlpha_Simple-E-Commerce-Store/
 
 ## Accessibility and search foundations
 
-The homepage includes:
+The pages include:
 
 - A document language of English.
 - One main heading, followed by section and product headings.
@@ -130,7 +138,7 @@ The homepage includes:
 - Descriptive navigation and product-specific button text.
 - A page title and description that explain the storefront's content.
 
-These are initial foundations. Accessibility conformance, search rankings, performance scores, and cross-browser compatibility have not been formally assessed. Image alternatives and the final responsive layout will be addressed when those assets and styles are added.
+These are initial foundations. Accessibility conformance, search rankings, performance scores, and cross-browser compatibility have not been formally assessed. Product images and their alternatives, and the final responsive layout, will be addressed when those assets and styles are added. Cart, checkout, confirmation, and account previews have `noindex` metadata; this is a search-engine instruction, not access control.
 
 ## Verification
 
@@ -139,8 +147,11 @@ There is no automated test suite yet. The current storefront can be reviewed wit
 | Check | How to verify | Expected result |
 | --- | --- | --- |
 | Page loads | Open `index.html` | Store header, three products, about section, and footer appear |
-| Browser title | Inspect the browser tab | “Simple Store \| Everyday Essentials” |
-| Section links | Select Home, Products, About, or Explore products | The matching section is targeted; scrolling depends on viewport height |
+| Browser title | Inspect the browser tab | “Everyday Essentials \| Simple Store” |
+| Product links | Open each product from the homepage | The matching detail section is targeted |
+| Shopping previews | Open Cart, Preview checkout, then the confirmation preview | Each page opens; all totals agree at PKR 3,600 and no order is placed |
+| Account forms | Open Log in and Register | All inputs and submission controls are disabled |
+| Checkout form | Open the checkout preview | Delivery fields are labelled and disabled; no data can be submitted |
 | Skip link | Reload, press Tab, then Enter | Focus moves to the main content |
 | Cart controls | Inspect each product button | Buttons are disabled and an availability notice is visible |
 | Local assets | Reload with the browser Network panel open | The stylesheet and script have no missing-file errors |
@@ -149,11 +160,15 @@ This checklist describes expected behavior; it is not a report that every browse
 
 ## Roadmap
 
-1. **Storefront structure** — complete the HTML pages and product detail content.
+1. **Storefront structure — complete:** seven connected HTML pages, sample product details, and labelled form previews.
 2. **Visual design** — introduce responsive CSS, product photography, and consistent components.
 3. **Shopping interactions** — implement cart state, quantity changes, totals, and form feedback.
 4. **Backend integration** — add account access, product data, and persistent orders.
 5. **Release preparation** — verify the shopping flow, address security and accessibility issues, deploy, and record the project walkthrough.
+
+## Study the HTML
+
+Read [the HTML guide](docs/HTML_GUIDE.md) for a suggested reading order, explanations of the elements and attributes, sample calculations, and exercises. The initial HTML milestone is complete; markup will still evolve as real data and interactions are introduced.
 
 ## Author
 

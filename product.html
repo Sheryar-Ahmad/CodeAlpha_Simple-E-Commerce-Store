@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore the Everyday Backpack, Study Notebook, and Desk Lamp with sample specifications and PKR prices.">
+    <title>Product Details | Simple Store</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/main.js" defer></script>
+  </head>
+  <body>
+    <!-- The skip link lets keyboard users bypass the repeated navigation. -->
+    <a href="#main-content">Skip to main content</a>
+
+    <header>
+      <a href="index.html">Simple Store</a>
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#products">Products</a></li>
+          <li><a href="cart.html">Cart</a></li>
+          <li><a href="login.html">Log in</a></li>
+          <li><a href="register.html">Register</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Each page has one main region and one h1 heading. -->
+    <main id="main-content" tabindex="-1">
+      <nav aria-label="Breadcrumb">
+        <ol>
+          <li><a href="index.html">Home</a></li>
+          <li><span aria-current="page">Product details</span></li>
+        </ol>
+      </nav>
+      <h1>Product details</h1>
+      <p id="product-note">Preview catalog: specifications and prices are illustrative. Stock has not been connected, and products cannot be added to a cart yet.</p>
+      <nav aria-label="Choose a product">
+        <ul>
+          <li><a href="#backpack">Everyday Backpack</a></li>
+          <li><a href="#notebook">Study Notebook</a></li>
+          <li><a href="#lamp">Desk Lamp</a></li>
+        </ul>
+      </nav>
+
+      <!-- Anchors show the correct product without needing JavaScript today. -->
+      <article id="backpack" aria-labelledby="backpack-title">
+        <h2 id="backpack-title">Everyday Backpack</h2>
+        <p>Keep your class notes and everyday items together on the way to campus.</p>
+        <p>Price: <data value="2500">PKR 2,500</data></p>
+        <!-- A description list pairs each product property with its value. -->
+        <dl>
+          <dt>Product code</dt>
+          <dd>BAG-001</dd>
+          <dt>Category</dt>
+          <dd>Bags</dd>
+          <dt>Availability</dt>
+          <dd>Not available to order in this preview</dd>
+        </dl>
+        <h3>Product highlights</h3>
+        <ul>
+          <li>Main compartment for everyday essentials</li>
+          <li>A front pocket for smaller items</li>
+        </ul>
+        <!-- Disabled fields prevent pretending that an unbuilt cart works. -->
+        <fieldset disabled aria-describedby="product-note">
+          <legend>Choose a quantity for Everyday Backpack</legend>
+          <label for="backpack-quantity">Quantity</label>
+          <input id="backpack-quantity" name="backpack-quantity" type="number" min="1" step="1" value="1" required>
+          <button type="button">Add Everyday Backpack to cart</button>
+        </fieldset>
+      </article>
+
+      <article id="notebook" aria-labelledby="notebook-title">
+        <h2 id="notebook-title">Study Notebook</h2>
+        <p>Give your lecture notes, revision plans, and ideas a place of their own.</p>
+        <p>Price: <data value="450">PKR 450</data></p>
+        <!-- A description list pairs each product property with its value. -->
+        <dl>
+          <dt>Product code</dt>
+          <dd>NOTE-001</dd>
+          <dt>Category</dt>
+          <dd>Stationery</dd>
+          <dt>Availability</dt>
+          <dd>Not available to order in this preview</dd>
+        </dl>
+        <h3>Product highlights</h3>
+        <ul>
+          <li>Lined pages for organized notes</li>
+          <li>A simple cover for everyday use</li>
+        </ul>
+        <!-- Disabled fields prevent pretending that an unbuilt cart works. -->
+        <fieldset disabled aria-describedby="product-note">
+          <legend>Choose a quantity for Study Notebook</legend>
+          <label for="notebook-quantity">Quantity</label>
+          <input id="notebook-quantity" name="notebook-quantity" type="number" min="1" step="1" value="1" required>
+          <button type="button">Add Study Notebook to cart</button>
+        </fieldset>
+      </article>
+
+      <article id="lamp" aria-labelledby="lamp-title">
+        <h2 id="lamp-title">Desk Lamp</h2>
+        <p>Make room for focused reading and evening study at your desk.</p>
+        <p>Price: <data value="1800">PKR 1,800</data></p>
+        <!-- A description list pairs each product property with its value. -->
+        <dl>
+          <dt>Product code</dt>
+          <dd>LAMP-001</dd>
+          <dt>Category</dt>
+          <dd>Workspace</dd>
+          <dt>Availability</dt>
+          <dd>Not available to order in this preview</dd>
+        </dl>
+        <h3>Product highlights</h3>
+        <ul>
+          <li>Compact design for a study space</li>
+          <li>Adjustable light direction</li>
+        </ul>
+        <!-- Disabled fields prevent pretending that an unbuilt cart works. -->
+        <fieldset disabled aria-describedby="product-note">
+          <legend>Choose a quantity for Desk Lamp</legend>
+          <label for="lamp-quantity">Quantity</label>
+          <input id="lamp-quantity" name="lamp-quantity" type="number" min="1" step="1" value="1" required>
+          <button type="button">Add Desk Lamp to cart</button>
+        </fieldset>
+      </article>
+
+      <a href="index.html#products">Back to all products</a>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Simple Store. Built by Sheheryar Ahmad.</p>
+      <nav aria-label="Footer navigation">
+        <a href="index.html#about">About the store</a>
+        <a href="index.html#products">Browse products</a>
+      </nav>
+      <a href="#main-content">Back to main content</a>
+    </footer>
+  </body>
+</html>

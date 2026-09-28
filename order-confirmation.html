@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Preview an order reference, item summary, and delivery status layout.">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Order Confirmation Preview | Simple Store</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/main.js" defer></script>
+  </head>
+  <body>
+    <!-- The skip link lets keyboard users bypass the repeated navigation. -->
+    <a href="#main-content">Skip to main content</a>
+
+    <header>
+      <a href="index.html">Simple Store</a>
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#products">Products</a></li>
+          <li><a href="cart.html">Cart</a></li>
+          <li><a href="login.html">Log in</a></li>
+          <li><a href="register.html">Register</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Each page has one main region and one h1 heading. -->
+    <main id="main-content" tabindex="-1">
+      <h1>Order confirmation preview</h1>
+      <p><strong>No order has been placed.</strong> This page demonstrates the information a confirmation will display after a successful order.</p>
+
+      <section aria-labelledby="order-title">
+        <h2 id="order-title">Example order details</h2>
+        <!-- Replace this sample information only after the server confirms an order. -->
+        <dl>
+          <dt>Order reference</dt>
+          <dd>DEMO-1001</dd>
+          <dt>Status</dt>
+          <dd>Preview only</dd>
+          <dt>Delivery address</dt>
+          <dd>The address from the completed checkout will appear here.</dd>
+          <dt>Payment method</dt>
+          <dd>Cash on delivery (example only)</dd>
+        </dl>
+      </section>
+
+      <section aria-labelledby="purchased-title">
+        <h2 id="purchased-title">Example items</h2>
+        <ul>
+          <li><a href="product.html#backpack">Everyday Backpack</a> &times; 1: PKR 2,500</li>
+          <li><a href="product.html#notebook">Study Notebook</a> &times; 2: PKR 900</li>
+        </ul>
+        <dl>
+          <dt>Subtotal</dt>
+          <dd>PKR 3,400</dd>
+          <dt>Delivery (example charge)</dt>
+          <dd>PKR 200</dd>
+          <dt>Total</dt>
+          <dd><strong>PKR 3,600</strong></dd>
+        </dl>
+      </section>
+
+      <section aria-labelledby="next-title">
+        <h2 id="next-title">Order updates</h2>
+        <p>Order progress will be available when order processing is implemented. No confirmation email has been sent from this preview.</p>
+      </section>
+      <a href="index.html#products">Continue browsing</a>
+      <a href="checkout.html">Back to checkout preview</a>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Simple Store. Built by Sheheryar Ahmad.</p>
+      <nav aria-label="Footer navigation">
+        <a href="index.html#about">About the store</a>
+        <a href="index.html#products">Browse products</a>
+      </nav>
+      <a href="#main-content">Back to main content</a>
+    </footer>
+  </body>
+</html>
