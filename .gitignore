@@ -1,0 +1,14 @@
+# Keep local secrets out of Git, including secrets in nested folders.
+.env
+.env.*
+!.env.example
+
+# Generated files for the later JavaScript and MERN stages.
+node_modules/
+dist/
+coverage/
+*.log
+
+# Operating system files.
+.DS_Store
+Thumbs.db
