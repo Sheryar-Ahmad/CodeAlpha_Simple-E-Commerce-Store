@@ -87,4 +87,15 @@ These numbers are static text today. The backend must calculate trusted prices, 
 5. Find `hidden` in the cart and explain when that section should be visible.
 6. Trace the example totals across the three shopping pages.
 
-Ask about any unfamiliar attribute before changing it. Product images, visual layout, dynamic states, and working submissions are future stages; this milestone completes the initial page markup, not the functioning store.
+Ask about any unfamiliar attribute before changing it. Responsive image layout, dynamic states, and working submissions are future stages; this milestone completes the initial page markup, not the functioning store.
+
+## How the product images work
+
+- `src` points to a local image file.
+- `alt` describes the visible product for someone who cannot see the image.
+- `width` and `height` provide its display dimensions and reserve space. The square products and wide banner keep their original proportions.
+- `loading="lazy"` lets the browser delay product images until they are near the viewport. The opening banner is not lazy-loaded.
+- `decoding="async"` allows product image decoding without requiring it to block the next paint.
+- `fetchpriority="high"` gives the opening banner a higher download-priority hint.
+
+The image files were supplied for the sample catalog. The CSS stage will make their display sizes adapt to the page layout. Setting HTML dimensions does not reduce the downloaded file size.
