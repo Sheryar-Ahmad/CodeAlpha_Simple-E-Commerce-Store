@@ -1,62 +1,173 @@
-# Simple E-Commerce Store
+<div align="center">
 
-A store built step by step by Sheheryar Ahmad for the CodeAlpha Full Stack Development internship (October 1-30, 2026).
+# Simple Store — E-Commerce Website
 
-## Current stage: semantic HTML
+**Everyday essentials, organized around a simple shopping experience.**
 
-The homepage contains navigation, an introduction, three example products, an about section, and a footer. The temporary shop name is **Simple Store**. Prices are illustrative and shown in Pakistani rupees (PKR).
+Developed by **[Sheheryar Ahmad](https://github.com/Sheryar-Ahmad)**
 
-CSS and JavaScript files contain comments only. The page uses the browser's default appearance. Cart buttons are deliberately disabled: there is no cart, checkout, authentication, database, or payment processing yet.
+CodeAlpha Full Stack Development Internship · October 2026
 
-## Open the page
+[Explore the code](https://github.com/Sheryar-Ahmad/CodeAlpha_Simple-E-Commerce-Store) · [Run locally](#getting-started) · [Feature roadmap](#roadmap)
 
-Open `index.html` in a browser. No installation, server, account, or environment file is needed for this stage.
+</div>
 
-## File structure
+---
 
-```text
-Simple E-Commerce Store/
-|-- index.html              # Page structure and content
-|-- assets/
-|   |-- css/style.css       # Future styles
-|   |-- js/main.js          # Future interactions
-|   `-- images/.gitkeep     # Keeps the empty image folder in Git
-|-- .gitignore             # Files Git should ignore
-|-- PROJECT_CONTEXT.md     # Project decisions and working rules
-`-- README.md              # Setup, status, and manual checks
+## Project overview
+
+Simple Store is an e-commerce website for browsing everyday products, managing a shopping cart, and placing orders. The project is being developed toward a complete shopping experience, covering both the customer-facing storefront and the backend services needed to manage products, accounts, and orders.
+
+The current catalog introduces study and workspace essentials with prices in Pakistani rupees (PKR). The implementation starts with semantic HTML and separate locations for styles, scripts, and product images.
+
+This repository contains **Task 1: Simple E-Commerce Store** for the CodeAlpha Full Stack Development internship.
+
+## Project status
+
+| Item | Current state |
+| --- | --- |
+| Development stage | HTML storefront foundation |
+| Available page | Homepage with three sample product listings |
+| Visual design | Browser-default appearance; custom styling is pending |
+| Shopping functionality | Not available yet; cart buttons are disabled |
+| Backend and database | Not implemented |
+| Deployment | No live deployment configured |
+
+> The repository currently contains a static storefront, not an operational shop. Products and prices are examples, and no orders or payments are accepted.
+
+## Features and scope
+
+### Available now
+
+- **Product listings:** product names, descriptions, and prices for an Everyday Backpack, Study Notebook, and Desk Lamp.
+- **Store navigation:** links to the home, products, and about sections.
+- **Semantic structure:** distinct header, navigation, main content, product articles, and footer.
+- **Keyboard navigation groundwork:** a skip link that moves focus to the main content.
+- **Page metadata:** a descriptive title, meta description, document language, and viewport setting.
+- **Organized source:** separate files for HTML, CSS, and JavaScript.
+
+### Planned shopping experience
+
+| Feature | Intended behavior |
+| --- | --- |
+| Product details | View a product's description, image, price, and availability |
+| Shopping cart | Add or remove products, update quantities, and review totals |
+| User accounts | Register, sign in, and access protected account features |
+| Order processing | Submit a cart and receive an order confirmation |
+| Persistent data | Store products, users, and orders in a database |
+| Responsive interface | Browse and shop comfortably on mobile and desktop |
+
+These features form the required e-commerce scope. They are planned capabilities, not claims about the current release.
+
+## Technology
+
+| Layer | Technology | Status |
+| --- | --- | --- |
+| Page structure | HTML5 | Implemented |
+| Styling | CSS3 | File prepared; styles pending |
+| Browser interactions | JavaScript | File prepared; behavior pending |
+| Version control | Git and GitHub | In use |
+| Backend | To be finalized | Not implemented |
+| Database | To be finalized | Not implemented |
+
+The current version has **no third-party runtime dependencies** and requires no build process.
+
+## Getting started
+
+### Prerequisites
+
+- Git, if cloning from the terminal.
+- A web browser.
+
+### Download the source
+
+```bash
+git clone https://github.com/Sheryar-Ahmad/CodeAlpha_Simple-E-Commerce-Store.git
+cd CodeAlpha_Simple-E-Commerce-Store
 ```
 
-Product images will be added when suitable assets are selected. There are no broken placeholder image links.
+Alternatively, download the repository using **Code → Download ZIP** and extract it.
 
-## Why these HTML elements?
+### Open the storefront
 
-- `header` introduces the store; `nav` groups navigation links.
-- `main` identifies the primary content. The skip link lets keyboard users jump to it.
-- `section` groups a topic under a heading.
-- `article` describes a product that can be understood on its own.
-- One `h1` introduces the page, `h2` headings introduce sections, and `h3` headings name products.
-- Links navigate; buttons perform actions. Cart buttons will become available when their action is implemented.
-- `footer` contains page credits and a return link.
+Open [index.html](index.html) in your browser. On Windows, you can double-click the file in File Explorer.
 
-The language, page title, description, and meaningful HTML provide an accessibility and SEO foundation. They do not complete the project's accessibility or SEO work.
+No `npm install`, server startup, database connection, or environment configuration is required at this stage. The page will appear without custom styling.
 
-## Manual checks
+## Repository structure
 
-1. Open `index.html`. Expect a plain page with the browser tab title **Simple Store | Everyday Essentials**.
-2. Click Home, Products, About, Explore products, and Back to top. Each should point to the relevant section of this page. On a tall screen the whole page may already fit, so scrolling can be minimal.
-3. Reload, press Tab, and then Enter on **Skip to main content**. Focus should move to the main content, skipping the header navigation.
-4. Confirm all three product names, descriptions, and PKR prices appear. Cart buttons should be disabled and the explanation should be visible above the list.
-5. Narrow the browser window. Text should wrap naturally. Designed mobile layouts will be added during the CSS stage.
-6. If using browser developer tools, reload with the Network panel open and confirm the local CSS and JavaScript files load without missing-file errors.
+```text
+CodeAlpha_Simple-E-Commerce-Store/
+├── index.html
+├── assets/
+│   ├── css/
+│   │   └── style.css
+│   ├── js/
+│   │   └── main.js
+│   └── images/
+│       └── .gitkeep
+├── .gitignore
+└── README.md
+```
 
-## Git and GitHub
+| Path | Responsibility |
+| --- | --- |
+| [index.html](index.html) | Homepage markup, content, navigation, and product listings |
+| [assets/css/style.css](assets/css/style.css) | Dedicated stylesheet; currently a placeholder comment |
+| [assets/js/main.js](assets/js/main.js) | Dedicated script; currently a placeholder comment |
+| `assets/images/` | Reserved for product images; `.gitkeep` retains the empty folder |
+| [.gitignore](.gitignore) | Excludes environment files, dependencies, build output, and logs |
+| [README.md](README.md) | Public project overview, setup, and implementation status |
 
-This folder is the repository boundary. Keep project files and future backend code inside it.
+## Accessibility and search foundations
 
-Git can record local commits before a GitHub repository exists. A commit creates a local history entry; a push sends commits to a configured remote such as GitHub. Until the remote exists, commit locally after each completed change and push the accumulated history when it is connected.
+The homepage includes:
 
-Never commit passwords, API keys, or real `.env` files. `.gitignore` helps prevent accidental additions but cannot remove secrets from files already tracked by Git.
+- A document language of English.
+- One main heading, followed by section and product headings.
+- Semantic landmarks that identify each major part of the page.
+- A keyboard-accessible skip link.
+- Descriptive navigation and product-specific button text.
+- A page title and description that explain the storefront's content.
 
-## Next steps
+These are initial foundations. Accessibility conformance, search rankings, performance scores, and cross-browser compatibility have not been formally assessed. Image alternatives and the final responsive layout will be addressed when those assets and styles are added.
 
-Review and commit the HTML foundation first. Continue HTML revisions as needed, then add CSS after Sheheryar agrees the HTML stage is complete. Discuss the React/backend architecture before introducing it. The official CodeAlpha task brief still needs to be checked before finalizing the full feature scope.
+## Verification
+
+There is no automated test suite yet. The current storefront can be reviewed with these checks:
+
+| Check | How to verify | Expected result |
+| --- | --- | --- |
+| Page loads | Open `index.html` | Store header, three products, about section, and footer appear |
+| Browser title | Inspect the browser tab | “Simple Store \| Everyday Essentials” |
+| Section links | Select Home, Products, About, or Explore products | The matching section is targeted; scrolling depends on viewport height |
+| Skip link | Reload, press Tab, then Enter | Focus moves to the main content |
+| Cart controls | Inspect each product button | Buttons are disabled and an availability notice is visible |
+| Local assets | Reload with the browser Network panel open | The stylesheet and script have no missing-file errors |
+
+This checklist describes expected behavior; it is not a report that every browser has passed testing.
+
+## Roadmap
+
+1. **Storefront structure** — complete the HTML pages and product detail content.
+2. **Visual design** — introduce responsive CSS, product photography, and consistent components.
+3. **Shopping interactions** — implement cart state, quantity changes, totals, and form feedback.
+4. **Backend integration** — add account access, product data, and persistent orders.
+5. **Release preparation** — verify the shopping flow, address security and accessibility issues, deploy, and record the project walkthrough.
+
+## Author
+
+**Sheheryar Ahmad**
+Software Engineering student at COMSATS University Islamabad
+Full Stack Development Intern at CodeAlpha · October 1–30, 2026
+
+[GitHub profile](https://github.com/Sheryar-Ahmad) · [Project repository](https://github.com/Sheryar-Ahmad/CodeAlpha_Simple-E-Commerce-Store)
+
+---
+
+<div align="center">
+
+<strong>Simple Store</strong><br>
+A CodeAlpha Full Stack Development project by Sheheryar Ahmad.
+
+</div>
