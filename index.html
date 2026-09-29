@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="assets/js/main.js" defer></script>
   </head>
-  <body>
+  <body class="index-page">
     <!-- The skip link lets keyboard users bypass the repeated navigation. -->
-    <a href="#main-content">Skip to main content</a>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
 
-    <header>
-      <a href="index.html">Simple Store</a>
-      <nav aria-label="Main navigation">
+    <header class="site-header">
+      <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">S.</span> Simple Store</a>
+      <nav class="site-nav" aria-label="Main navigation">
         <ul>
           <li><a href="index.html" aria-current="page">Home</a></li>
           <li><a href="index.html#products">Products</a></li>
@@ -27,60 +27,65 @@
 
     <!-- Each page has one main region and one h1 heading. -->
     <main id="main-content" tabindex="-1">
-      <section aria-labelledby="home-title">
-        <h1 id="home-title">Everyday essentials, all in one place.</h1>
-        <p>Find useful items for your study space and your daily routine.</p>
-        <a href="#products">Explore products</a>
+      <section class="hero" aria-labelledby="home-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Made for your everyday</p>
+          <h1 id="home-title">Everyday essentials, all in one place.</h1>
+          <p>Find useful items for your study space and your daily routine.</p>
+          <a class="button" href="#products">Explore products <span aria-hidden="true">&rarr;</span></a>
+        </div>
         <!-- The opening banner loads immediately; product images below load as needed. -->
-        <img src="assets/images/123.png" alt="Navy backpack beside a wooden desk with a notebook and adjustable lamp" width="280" height="140" fetchpriority="high">
+        <img src="assets/images/456.png" alt="Navy backpack beside a wooden desk with a notebook and adjustable lamp" width="280" height="140" fetchpriority="high">
       </section>
 
-      <section id="products" aria-labelledby="products-title">
-        <h2 id="products-title">Our products</h2>
-        <p id="shopping-note">Store preview: products and prices are examples. Ordering is not available yet.</p>
+      <section class="collection" id="products" aria-labelledby="products-title">
+        <p class="eyebrow">The essentials collection</p>
+        <h2 id="products-title">A little more focus. A little less clutter.</h2>
+        <p class="preview-note" id="shopping-note">Store preview: products and prices are examples. Ordering is not available yet.</p>
         <!-- Each article describes one product; links open its matching details. -->
-        <ul>
+        <ul class="product-grid">
           <li>
-            <article aria-labelledby="backpack-title">
-              <h3 id="backpack-title"><a href="product.html#backpack">Everyday Backpack</a></h3>
+            <article class="product-card" aria-labelledby="backpack-title">
               <img src="assets/images/131415.png" alt="Navy-blue backpack with a front zippered pocket and padded shoulder straps" width="240" height="240" loading="lazy" decoding="async">
+              <h3 id="backpack-title"><a href="product.html#backpack">Everyday Backpack</a></h3>
               <p>A simple backpack for books, stationery, and daily essentials.</p>
-              <p>Price: <data value="2500">PKR 2,500</data></p>
-              <a href="product.html#backpack">View Everyday Backpack details</a>
+              <p class="price">Price: <data value="2500">PKR 2,500</data></p>
+              <a class="detail-link" href="product.html#backpack">View Everyday Backpack details</a>
               <button type="button" disabled aria-describedby="shopping-note">Add Everyday Backpack to cart</button>
             </article>
           </li>
           <li>
-            <article aria-labelledby="notebook-title">
-              <h3 id="notebook-title"><a href="product.html#notebook">Study Notebook</a></h3>
+            <article class="product-card" aria-labelledby="notebook-title">
               <img src="assets/images/101112.png" alt="Navy spiral notebook with lined pages" width="240" height="240" loading="lazy" decoding="async">
+              <h3 id="notebook-title"><a href="product.html#notebook">Study Notebook</a></h3>
               <p>A lined notebook for class notes, ideas, and daily plans.</p>
-              <p>Price: <data value="450">PKR 450</data></p>
-              <a href="product.html#notebook">View Study Notebook details</a>
+              <p class="price">Price: <data value="450">PKR 450</data></p>
+              <a class="detail-link" href="product.html#notebook">View Study Notebook details</a>
               <button type="button" disabled aria-describedby="shopping-note">Add Study Notebook to cart</button>
             </article>
           </li>
           <li>
-            <article aria-labelledby="lamp-title">
-              <h3 id="lamp-title"><a href="product.html#lamp">Desk Lamp</a></h3>
+            <article class="product-card" aria-labelledby="lamp-title">
               <img src="assets/images/789.png" alt="Navy desk lamp with an adjustable arm and circular base" width="240" height="240" loading="lazy" decoding="async">
+              <h3 id="lamp-title"><a href="product.html#lamp">Desk Lamp</a></h3>
               <p>A compact lamp for your reading corner or study desk.</p>
-              <p>Price: <data value="1800">PKR 1,800</data></p>
-              <a href="product.html#lamp">View Desk Lamp details</a>
+              <p class="price">Price: <data value="1800">PKR 1,800</data></p>
+              <a class="detail-link" href="product.html#lamp">View Desk Lamp details</a>
               <button type="button" disabled aria-describedby="shopping-note">Add Desk Lamp to cart</button>
             </article>
           </li>
         </ul>
       </section>
 
-      <section id="about" aria-labelledby="about-title">
+      <section class="about-panel" id="about" aria-labelledby="about-title">
+        <p class="eyebrow">Thoughtful essentials, simple choices</p>
         <h2 id="about-title">About Simple Store</h2>
         <p>Simple Store brings study and workspace essentials into one easy-to-browse catalog.</p>
         <p>Explore product details and sample prices before building your everyday kit.</p>
       </section>
     </main>
 
-    <footer>
+    <footer class="site-footer">
       <p>&copy; 2026 Simple Store. Built by Sheheryar Ahmad.</p>
       <nav aria-label="Footer navigation">
         <a href="index.html#about">About the store</a>

@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="assets/js/main.js" defer></script>
   </head>
-  <body>
+  <body class="product-page">
     <!-- The skip link lets keyboard users bypass the repeated navigation. -->
-    <a href="#main-content">Skip to main content</a>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
 
-    <header>
-      <a href="index.html">Simple Store</a>
-      <nav aria-label="Main navigation">
+    <header class="site-header">
+      <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">S.</span> Simple Store</a>
+      <nav class="site-nav" aria-label="Main navigation">
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="index.html#products">Products</a></li>
@@ -27,15 +27,15 @@
 
     <!-- Each page has one main region and one h1 heading. -->
     <main id="main-content" tabindex="-1">
-      <nav aria-label="Breadcrumb">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
         <ol>
           <li><a href="index.html">Home</a></li>
           <li><span aria-current="page">Product details</span></li>
         </ol>
       </nav>
       <h1>Product details</h1>
-      <p id="product-note">Preview catalog: specifications and prices are illustrative. Stock has not been connected, and products cannot be added to a cart yet.</p>
-      <nav aria-label="Choose a product">
+      <p class="preview-note" id="product-note">Preview catalog: specifications and prices are illustrative. Stock has not been connected, and products cannot be added to a cart yet.</p>
+      <nav class="product-tabs" aria-label="Choose a product">
         <ul>
           <li><a href="#backpack">Everyday Backpack</a></li>
           <li><a href="#notebook">Study Notebook</a></li>
@@ -44,97 +44,103 @@
       </nav>
 
       <!-- Anchors show the correct product without needing JavaScript today. -->
-      <article id="backpack" aria-labelledby="backpack-title">
-        <h2 id="backpack-title">Everyday Backpack</h2>
+      <article class="product-detail" id="backpack" aria-labelledby="backpack-title">
         <!-- Width and height reserve a square space before the image finishes loading. -->
         <img src="assets/images/131415.png" alt="Navy-blue backpack with a front zippered pocket and padded shoulder straps" width="280" height="280" loading="lazy" decoding="async">
-        <p>Keep your class notes and everyday items together on the way to campus.</p>
-        <p>Price: <data value="2500">PKR 2,500</data></p>
-        <!-- A description list pairs each product property with its value. -->
-        <dl>
-          <dt>Product code</dt>
-          <dd>BAG-001</dd>
-          <dt>Category</dt>
-          <dd>Bags</dd>
-          <dt>Availability</dt>
-          <dd>Not available to order in this preview</dd>
-        </dl>
-        <h3>Product highlights</h3>
-        <ul>
-          <li>Main compartment for everyday essentials</li>
-          <li>A front pocket for smaller items</li>
-        </ul>
-        <!-- Disabled fields prevent pretending that an unbuilt cart works. -->
-        <fieldset disabled aria-describedby="product-note">
-          <legend>Choose a quantity for Everyday Backpack</legend>
-          <label for="backpack-quantity">Quantity</label>
-          <input id="backpack-quantity" name="backpack-quantity" type="number" min="1" step="1" value="1" required>
-          <button type="button">Add Everyday Backpack to cart</button>
-        </fieldset>
+        <div class="product-info">
+          <h2 id="backpack-title">Everyday Backpack</h2>
+          <p>Keep your class notes and everyday items together on the way to campus.</p>
+          <p class="price">Price: <data value="2500">PKR 2,500</data></p>
+          <!-- A description list pairs each product property with its value. -->
+          <dl>
+            <dt>Product code</dt>
+            <dd>BAG-001</dd>
+            <dt>Category</dt>
+            <dd>Bags</dd>
+            <dt>Availability</dt>
+            <dd>Not available to order in this preview</dd>
+          </dl>
+          <h3>Product highlights</h3>
+          <ul>
+            <li>Main compartment for everyday essentials</li>
+            <li>A front pocket for smaller items</li>
+          </ul>
+          <!-- Disabled fields prevent pretending that an unbuilt cart works. -->
+          <fieldset disabled aria-describedby="product-note">
+            <legend>Choose a quantity for Everyday Backpack</legend>
+            <label for="backpack-quantity">Quantity</label>
+            <input id="backpack-quantity" name="backpack-quantity" type="number" min="1" step="1" value="1" required>
+            <button type="button">Add Everyday Backpack to cart</button>
+          </fieldset>
+        </div>
       </article>
 
-      <article id="notebook" aria-labelledby="notebook-title">
-        <h2 id="notebook-title">Study Notebook</h2>
+      <article class="product-detail" id="notebook" aria-labelledby="notebook-title">
         <!-- Width and height reserve a square space before the image finishes loading. -->
         <img src="assets/images/101112.png" alt="Navy spiral notebook with lined pages" width="280" height="280" loading="lazy" decoding="async">
-        <p>Give your lecture notes, revision plans, and ideas a place of their own.</p>
-        <p>Price: <data value="450">PKR 450</data></p>
-        <!-- A description list pairs each product property with its value. -->
-        <dl>
-          <dt>Product code</dt>
-          <dd>NOTE-001</dd>
-          <dt>Category</dt>
-          <dd>Stationery</dd>
-          <dt>Availability</dt>
-          <dd>Not available to order in this preview</dd>
-        </dl>
-        <h3>Product highlights</h3>
-        <ul>
-          <li>Lined pages for organized notes</li>
-          <li>A navy cover and spiral binding for everyday use</li>
-        </ul>
-        <!-- Disabled fields prevent pretending that an unbuilt cart works. -->
-        <fieldset disabled aria-describedby="product-note">
-          <legend>Choose a quantity for Study Notebook</legend>
-          <label for="notebook-quantity">Quantity</label>
-          <input id="notebook-quantity" name="notebook-quantity" type="number" min="1" step="1" value="1" required>
-          <button type="button">Add Study Notebook to cart</button>
-        </fieldset>
+        <div class="product-info">
+          <h2 id="notebook-title">Study Notebook</h2>
+          <p>Give your lecture notes, revision plans, and ideas a place of their own.</p>
+          <p class="price">Price: <data value="450">PKR 450</data></p>
+          <!-- A description list pairs each product property with its value. -->
+          <dl>
+            <dt>Product code</dt>
+            <dd>NOTE-001</dd>
+            <dt>Category</dt>
+            <dd>Stationery</dd>
+            <dt>Availability</dt>
+            <dd>Not available to order in this preview</dd>
+          </dl>
+          <h3>Product highlights</h3>
+          <ul>
+            <li>Lined pages for organized notes</li>
+            <li>A navy cover and spiral binding for everyday use</li>
+          </ul>
+          <!-- Disabled fields prevent pretending that an unbuilt cart works. -->
+          <fieldset disabled aria-describedby="product-note">
+            <legend>Choose a quantity for Study Notebook</legend>
+            <label for="notebook-quantity">Quantity</label>
+            <input id="notebook-quantity" name="notebook-quantity" type="number" min="1" step="1" value="1" required>
+            <button type="button">Add Study Notebook to cart</button>
+          </fieldset>
+        </div>
       </article>
 
-      <article id="lamp" aria-labelledby="lamp-title">
-        <h2 id="lamp-title">Desk Lamp</h2>
+      <article class="product-detail" id="lamp" aria-labelledby="lamp-title">
         <!-- Width and height reserve a square space before the image finishes loading. -->
         <img src="assets/images/789.png" alt="Navy desk lamp with an adjustable arm and circular base" width="280" height="280" loading="lazy" decoding="async">
-        <p>Make room for focused reading and evening study at your desk.</p>
-        <p>Price: <data value="1800">PKR 1,800</data></p>
-        <!-- A description list pairs each product property with its value. -->
-        <dl>
-          <dt>Product code</dt>
-          <dd>LAMP-001</dd>
-          <dt>Category</dt>
-          <dd>Workspace</dd>
-          <dt>Availability</dt>
-          <dd>Not available to order in this preview</dd>
-        </dl>
-        <h3>Product highlights</h3>
-        <ul>
-          <li>Compact design for a study space</li>
-          <li>Adjustable light direction</li>
-        </ul>
-        <!-- Disabled fields prevent pretending that an unbuilt cart works. -->
-        <fieldset disabled aria-describedby="product-note">
-          <legend>Choose a quantity for Desk Lamp</legend>
-          <label for="lamp-quantity">Quantity</label>
-          <input id="lamp-quantity" name="lamp-quantity" type="number" min="1" step="1" value="1" required>
-          <button type="button">Add Desk Lamp to cart</button>
-        </fieldset>
+        <div class="product-info">
+          <h2 id="lamp-title">Desk Lamp</h2>
+          <p>Make room for focused reading and evening study at your desk.</p>
+          <p class="price">Price: <data value="1800">PKR 1,800</data></p>
+          <!-- A description list pairs each product property with its value. -->
+          <dl>
+            <dt>Product code</dt>
+            <dd>LAMP-001</dd>
+            <dt>Category</dt>
+            <dd>Workspace</dd>
+            <dt>Availability</dt>
+            <dd>Not available to order in this preview</dd>
+          </dl>
+          <h3>Product highlights</h3>
+          <ul>
+            <li>Compact design for a study space</li>
+            <li>Adjustable light direction</li>
+          </ul>
+          <!-- Disabled fields prevent pretending that an unbuilt cart works. -->
+          <fieldset disabled aria-describedby="product-note">
+            <legend>Choose a quantity for Desk Lamp</legend>
+            <label for="lamp-quantity">Quantity</label>
+            <input id="lamp-quantity" name="lamp-quantity" type="number" min="1" step="1" value="1" required>
+            <button type="button">Add Desk Lamp to cart</button>
+          </fieldset>
+        </div>
       </article>
 
-      <a href="index.html#products">Back to all products</a>
+      <a class="button button-secondary" href="index.html#products">Back to all products</a>
     </main>
 
-    <footer>
+    <footer class="site-footer">
       <p>&copy; 2026 Simple Store. Built by Sheheryar Ahmad.</p>
       <nav aria-label="Footer navigation">
         <a href="index.html#about">About the store</a>

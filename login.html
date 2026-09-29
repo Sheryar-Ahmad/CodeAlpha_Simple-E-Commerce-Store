@@ -9,13 +9,13 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="assets/js/main.js" defer></script>
   </head>
-  <body>
+  <body class="auth-page">
     <!-- The skip link lets keyboard users bypass the repeated navigation. -->
-    <a href="#main-content">Skip to main content</a>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
 
-    <header>
-      <a href="index.html">Simple Store</a>
-      <nav aria-label="Main navigation">
+    <header class="site-header">
+      <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">S.</span> Simple Store</a>
+      <nav class="site-nav" aria-label="Main navigation">
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="index.html#products">Products</a></li>
@@ -28,29 +28,38 @@
 
     <!-- Each page has one main region and one h1 heading. -->
     <main id="main-content" tabindex="-1">
-      <h1>Log in to Simple Store</h1>
-      <p id="login-note">Account preview: sign-in is not connected yet. Fields are disabled, and no credentials are collected.</p>
-      <!-- Never use GET for passwords. Enable this form only with a secure backend. -->
-      <form action="login.html" method="post" aria-describedby="login-note">
-        <fieldset disabled>
-          <legend>Your account</legend>
-          <p>
-            <label for="login-email">Email address (required)</label>
-            <input id="login-email" name="email" type="email" autocomplete="username" maxlength="254" required>
-          </p>
-          <p>
-            <label for="login-password">Password (required)</label>
-            <input id="login-password" name="password" type="password" autocomplete="current-password" required>
-          </p>
-          <button type="submit">Log in</button>
-        </fieldset>
-        <!-- Future errors belong beside the form and must not reveal account existence. -->
-        <p id="login-error" role="alert" hidden></p>
-      </form>
-      <p>New to Simple Store? <a href="register.html">View the registration page</a>.</p>
+      <div class="auth-layout">
+        <div class="auth-intro">
+          <p class="eyebrow">Your everyday starts here</p>
+          <h1>Log in to Simple Store</h1>
+          <p>A small collection for big ideas, busy days, and the space you call your own.</p>
+          <a href="index.html#products">Explore the collection &rarr;</a>
+        </div>
+        <div class="auth-card">
+          <p class="preview-note" id="login-note">Account preview: sign-in is not connected yet. Fields are disabled, and no credentials are collected.</p>
+          <!-- Never use GET for passwords. Enable this form only with a secure backend. -->
+          <form action="login.html" method="post" aria-describedby="login-note">
+            <fieldset disabled>
+              <legend>Your account</legend>
+              <p>
+                <label for="login-email">Email address (required)</label>
+                <input id="login-email" name="email" type="email" autocomplete="username" maxlength="254" required>
+              </p>
+              <p>
+                <label for="login-password">Password (required)</label>
+                <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+              </p>
+              <button type="submit">Log in</button>
+            </fieldset>
+            <!-- Future errors belong beside the form and must not reveal account existence. -->
+            <p id="login-error" role="alert" hidden></p>
+          </form>
+          <p>New to Simple Store? <a href="register.html">View the registration page</a>.</p>
+        </div>
+      </div>
     </main>
 
-    <footer>
+    <footer class="site-footer">
       <p>&copy; 2026 Simple Store. Built by Sheheryar Ahmad.</p>
       <nav aria-label="Footer navigation">
         <a href="index.html#about">About the store</a>
