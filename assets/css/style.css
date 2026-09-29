@@ -601,6 +601,7 @@ input[type="radio"] {
   width: 1.1rem;
   min-height: 0;
   height: 1.1rem;
+  padding: 0;
   margin: 0 0.5rem 0 0;
   vertical-align: middle;
   accent-color: var(--color-ink);
@@ -909,7 +910,8 @@ td button {
   .site-header,
   .site-footer,
   .skip-link,
-  button {
+  button,
+  .product-info fieldset button {
     display: none;
   }
 
