@@ -1,1 +1,935 @@
-/* Store styles will be added after we finish reviewing the HTML. */
+/* ======================================================================
+   SIMPLE STORE | Sheheryar Ahmad
+   Read from top to bottom: foundations, components, pages, then breakpoints.
+   Small screens are the default. Wider screens gain columns near the end.
+   ====================================================================== */
+
+/* 01. DESIGN TOKENS
+   Custom properties store reusable values. Change a color here, once. */
+:root {
+  --color-background: #f7f5f0;
+  --color-surface: #ffffff;
+  --color-ink: #182b40;
+  --color-muted: #56616b;
+  --color-accent: #8b462d;
+  --color-border: #dcdedb;
+  --color-soft: #eeeee7;
+  --color-focus: #007c83;
+  --color-danger: #a52430;
+  --font-body: "Segoe UI", Arial, sans-serif;
+  --font-heading: Georgia, "Times New Roman", serif;
+  --radius-small: 0.6rem;
+  --radius-large: 1.5rem;
+  --shadow-soft: 0 12px 35px rgb(24 43 64 / 6%);
+  --content-width: 80rem;
+}
+
+/* 02. RESET AND BASE
+   border-box includes padding and borders inside the width we set. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-background);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  overflow-wrap: break-word;
+}
+
+/* Never let a grid, panel, or other display rule reveal a hidden state. */
+[hidden] {
+  display: none !important;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1,
+h2 {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+}
+
+h1 {
+  /* clamp(minimum, flexible value, maximum) keeps headings in a useful range. */
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+  margin-bottom: 1.25rem;
+}
+
+h3 {
+  font-size: 1.15rem;
+  line-height: 1.4;
+  margin-bottom: 0.75rem;
+}
+
+p {
+  margin-bottom: 1.25rem;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 0.25em;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  color: var(--color-accent);
+}
+
+/* An outline does not move the surrounding layout like a border can. */
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 4px;
+}
+
+::selection {
+  background: var(--color-ink);
+  color: var(--color-surface);
+}
+
+[id] {
+  scroll-margin-top: 2rem;
+}
+
+/* 03. SHARED PAGE FRAME AND NAVIGATION */
+.site-header,
+main,
+.site-footer {
+  width: min(var(--content-width), calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding-block: 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--color-ink);
+  color: var(--color-surface);
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.site-nav ul,
+.product-tabs ul,
+.breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.site-nav a {
+  display: block;
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--radius-small);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.site-nav a:hover,
+.site-nav a[aria-current="page"] {
+  background: var(--color-soft);
+  color: var(--color-ink);
+}
+
+.site-nav a[aria-current="page"] {
+  text-decoration: underline;
+}
+
+.site-nav a[href="register.html"] {
+  background: var(--color-ink);
+  color: var(--color-surface);
+}
+
+.site-nav a[href="register.html"]:hover {
+  background: var(--color-accent);
+}
+
+main {
+  flex: 1;
+  padding-block: 2.5rem 4rem;
+}
+
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem 2rem;
+  padding-block: 2rem;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+.site-footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Off-screen until focused: keyboard users can skip the repeated header. */
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 1rem;
+  z-index: 10;
+  padding: 0.75rem 1rem;
+  transform: translateY(-150%);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  border-radius: var(--radius-small);
+}
+
+.skip-link:focus {
+  transform: translateY(0.5rem);
+}
+
+/* 04. REUSABLE COMPONENTS */
+.eyebrow {
+  margin-bottom: 1rem;
+  color: var(--color-accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.button,
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 2.875rem;
+  padding: 0.8rem 1.25rem;
+  border: 1px solid var(--color-ink);
+  border-radius: var(--radius-small);
+  background: var(--color-ink);
+  color: var(--color-surface);
+  font-weight: 600;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.button:hover,
+button:enabled:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-surface);
+}
+
+.button-secondary {
+  background: transparent;
+  color: var(--color-ink);
+  border-color: var(--color-border);
+}
+
+/* :disabled also matches a control disabled by its parent fieldset. */
+button:disabled {
+  background: var(--color-soft);
+  border-color: var(--color-border);
+  color: var(--color-muted);
+  cursor: not-allowed;
+}
+
+.preview-note {
+  padding: 1rem 1.25rem;
+  margin-bottom: 2rem;
+  border-left: 3px solid var(--color-accent);
+  border-radius: 0 var(--radius-small) var(--radius-small) 0;
+  background: var(--color-soft);
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.panel {
+  min-width: 0;
+  padding: 1.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-large);
+  background: var(--color-surface);
+}
+
+.panel h2 {
+  font-size: 1.65rem;
+}
+
+.price {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+.price data {
+  margin-left: 0.25rem;
+  color: var(--color-ink);
+  font-size: 1.35rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.breadcrumb {
+  margin-bottom: 1.5rem;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+.breadcrumb ol {
+  gap: 0.75rem;
+}
+
+/* The slash is decoration; the real breadcrumb labels stay in the HTML. */
+.breadcrumb li + li::before {
+  content: "/";
+  margin-right: 0.75rem;
+}
+
+/* 05. HOMEPAGE HERO */
+.hero {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-large);
+  background: #efece3;
+}
+
+.hero-copy {
+  align-self: center;
+  padding: clamp(1.5rem, 4.5vw, 4rem);
+}
+
+.hero h1 {
+  max-width: 11ch;
+  font-size: clamp(2.8rem, 5.4vw, 4.7rem);
+  margin-bottom: 1.5rem;
+}
+
+.hero-copy > p:not(.eyebrow) {
+  max-width: 34ch;
+  margin-bottom: 2rem;
+  color: var(--color-muted);
+}
+
+.hero > img {
+  width: 100%;
+  height: 100%;
+  min-height: 15rem;
+  object-fit: cover;
+  object-position: 65% center;
+}
+
+/* 06. PRODUCT COLLECTION AND ABOUT SECTION */
+.collection {
+  padding-block: 4rem;
+}
+
+.collection > h2 {
+  max-width: 22ch;
+}
+
+.product-grid {
+  display: grid;
+  gap: 1.5rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.product-grid > li {
+  min-width: 0;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-large);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.product-card img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  border-radius: 1rem;
+  margin-bottom: 1.5rem;
+  background: var(--color-background);
+}
+
+.product-card h3 a {
+  text-decoration: none;
+}
+
+.product-card h3 a:hover {
+  text-decoration: underline;
+}
+
+.product-card > p:not(.price) {
+  flex-grow: 1;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+.detail-link {
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.product-card button {
+  width: 100%;
+  padding-inline: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.about-panel {
+  padding: clamp(1.5rem, 5vw, 4rem);
+  border-radius: var(--radius-large);
+  background: var(--color-ink);
+  color: var(--color-surface);
+}
+
+.about-panel .eyebrow {
+  color: #ead4ab;
+}
+
+.about-panel > p:not(.eyebrow) {
+  max-width: 64ch;
+  color: #d6dfe5;
+}
+
+.about-panel > p:last-child {
+  margin-bottom: 0;
+}
+
+/* 07. PRODUCT DETAILS */
+.product-tabs {
+  margin-bottom: 2rem;
+}
+
+.product-tabs ul {
+  gap: 0.75rem;
+}
+
+.product-tabs a {
+  display: block;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 2rem;
+  background: var(--color-surface);
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.product-tabs a:hover {
+  border-color: var(--color-accent);
+}
+
+.product-detail {
+  display: grid;
+  align-items: start;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  margin-bottom: 2rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-large);
+  background: var(--color-surface);
+}
+
+.product-detail:target {
+  border-color: var(--color-accent);
+}
+
+.product-detail > img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  border-radius: 1rem;
+}
+
+.product-info {
+  min-width: 0;
+}
+
+.product-info > p:not(.price),
+.product-info li {
+  color: var(--color-muted);
+}
+
+.product-info ul {
+  padding-left: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+/* A description list has pairs of labels (dt) and values (dd). */
+dl {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0.8rem 1rem;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+}
+
+dt {
+  color: var(--color-muted);
+}
+
+dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* 08. INPUTS AND FIELDSETS
+   Labels stay visible. Placeholder text is not a replacement for a label. */
+fieldset {
+  min-inline-size: 0;
+  padding: 1.25rem;
+  margin: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-small);
+}
+
+legend {
+  padding-inline: 0.5rem;
+  font-weight: 600;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  min-height: 2.875rem;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid #aeb6bb;
+  border-radius: var(--radius-small);
+  background: var(--color-surface);
+  color: var(--color-ink);
+}
+
+textarea {
+  resize: vertical;
+}
+
+input[type="number"] {
+  max-width: 5.5rem;
+}
+
+input[type="radio"] {
+  width: 1.1rem;
+  min-height: 0;
+  height: 1.1rem;
+  margin: 0 0.5rem 0 0;
+  vertical-align: middle;
+  accent-color: var(--color-ink);
+}
+
+input[type="radio"] + label {
+  display: inline;
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+  background: #f3f4f2;
+  color: var(--color-muted);
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+.product-info fieldset button {
+  display: flex;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+/* These rules are ready for real validation; CSS itself does not validate data. */
+[aria-invalid="true"] {
+  border-color: var(--color-danger);
+}
+
+[role="alert"] {
+  padding: 1rem;
+  border-left: 3px solid var(--color-danger);
+  background: #fff0f0;
+  color: var(--color-danger);
+}
+
+/* 09. CART AND ORDER SUMMARY */
+.cart-layout,
+.checkout-layout,
+.confirmation-grid {
+  display: grid;
+  align-items: start;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Keep the real table structure and contain its scroll on small screens. */
+.table-scroll {
+  overflow-x: auto;
+  border-radius: var(--radius-small);
+}
+
+table {
+  width: 100%;
+  min-width: 40rem;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+caption {
+  padding-bottom: 1rem;
+  color: var(--color-muted);
+  text-align: left;
+}
+
+th,
+td {
+  padding: 1rem 0.75rem;
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+thead {
+  background: var(--color-background);
+}
+
+td label {
+  font-size: 0.75rem;
+}
+
+td button {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+}
+
+.order-summary {
+  border-top: 3px solid var(--color-ink);
+}
+
+.order-summary dd {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The last dt/dd pair is the total in each current summary. */
+.order-summary dt:last-of-type,
+.order-summary dd:last-of-type {
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.order-summary .button {
+  display: flex;
+  margin-top: 0.75rem;
+}
+
+.order-summary ul {
+  padding-left: 1.25rem;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.order-summary li + li {
+  margin-top: 0.75rem;
+}
+
+/* 10. CHECKOUT */
+.checkout-fields,
+.checkout-sidebar {
+  min-width: 0;
+}
+
+.form-panel {
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: var(--radius-large);
+  background: var(--color-surface);
+}
+
+.form-panel legend {
+  font-size: 1.1rem;
+}
+
+.form-panel p:last-child {
+  margin-bottom: 0;
+}
+
+.checkout-sidebar > button {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+/* 11. ACCOUNT PAGES */
+.auth-layout {
+  display: grid;
+  max-width: 68rem;
+  margin-inline: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-large);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.auth-intro {
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+  border-radius: var(--radius-large) var(--radius-large) 0 0;
+  background: var(--color-ink);
+  color: var(--color-surface);
+}
+
+.auth-intro h1 {
+  font-size: clamp(2.5rem, 4.5vw, 3.75rem);
+}
+
+.auth-intro .eyebrow {
+  color: #ead4ab;
+}
+
+.auth-intro > p:not(.eyebrow) {
+  max-width: 35ch;
+  color: #d6dfe5;
+}
+
+.auth-intro a:hover {
+  color: #ead4ab;
+}
+
+.auth-intro a:focus-visible {
+  outline-color: #ead4ab;
+}
+
+.auth-card {
+  min-width: 0;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.auth-card fieldset {
+  border: 0;
+  padding: 0;
+}
+
+.auth-card legend {
+  padding: 0 0 1rem;
+  font-size: 1.15rem;
+}
+
+.auth-card button {
+  width: 100%;
+}
+
+.auth-card > p:last-child {
+  margin: 1.5rem 0 0;
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+#password-help {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+/* 12. CONFIRMATION PREVIEW */
+.updates-panel {
+  margin-bottom: 1.5rem;
+}
+
+.updates-panel p {
+  max-width: 70ch;
+  margin-bottom: 0;
+  color: var(--color-muted);
+}
+
+.order-confirmation-page main > .button {
+  margin: 0 0.5rem 0.75rem 0;
+}
+
+/* 13. RESPONSIVE LAYOUTS
+   minmax(0, 1fr) lets a column shrink instead of overflowing its container. */
+@media (min-width: 40rem) {
+  .site-header,
+  main,
+  .site-footer {
+    width: min(var(--content-width), calc(100% - 4rem));
+  }
+
+  .site-nav a {
+    padding-inline: 1rem;
+  }
+
+  main {
+    padding-block: 3rem 5rem;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 56rem) {
+  .hero {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .product-detail,
+  .auth-layout,
+  .confirmation-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .checkout-layout {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  }
+
+  .auth-intro {
+    padding-top: 4rem;
+    border-radius: var(--radius-large) 0 0 var(--radius-large);
+  }
+
+  .collection {
+    padding-block: 5rem;
+  }
+}
+
+@media (min-width: 75rem) {
+  .cart-layout {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  }
+}
+
+/* 14. USER PREFERENCES AND PRINT
+   Respect people who find animated scrolling or transitions uncomfortable. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .button,
+  button {
+    transition: none;
+  }
+}
+
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+
+  .site-header,
+  .site-footer,
+  .skip-link,
+  button {
+    display: none;
+  }
+
+  main {
+    width: 100%;
+    padding: 0;
+  }
+
+  .panel,
+  .product-card,
+  .product-detail,
+  .auth-layout {
+    box-shadow: none;
+  }
+
+  .table-scroll {
+    overflow: visible;
+  }
+
+  table {
+    min-width: 0;
+  }
+}
