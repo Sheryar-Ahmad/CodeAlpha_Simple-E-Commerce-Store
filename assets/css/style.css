@@ -649,6 +649,11 @@ select:disabled {
 }
 
 /* Keep the real table structure and contain its scroll on small screens. */
+.table-hint {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
 .table-scroll {
   overflow-x: auto;
   border-radius: var(--radius-small);
