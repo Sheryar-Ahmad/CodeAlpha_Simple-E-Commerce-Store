@@ -26,14 +26,14 @@ This repository contains **Task 1: Simple E-Commerce Store** for the CodeAlpha F
 
 | Item | Current state |
 | --- | --- |
-| Development stage | HTML and responsive CSS complete for the current seven-page preview |
+| Development stage | HTML, responsive CSS, and front-end JavaScript shopping flow complete |
 | Available pages | Homepage, product details, cart, checkout, confirmation, login, and registration |
-| Visual design | Navy-and-cream theme, responsive product layouts, and styled account and checkout previews |
-| Shopping functionality | Not available yet; cart buttons are disabled |
+| Visual design | Navy-and-cream theme, responsive product layouts, and styled account, cart, and checkout screens |
+| Shopping functionality | Browser-saved cart, quantity updates, cart totals, demo checkout, and demo confirmation |
 | Backend and database | Not implemented |
 | Deployment | No live deployment configured |
 
-> The repository currently contains a static storefront, not an operational shop. Products and prices are examples, and no orders or payments are accepted.
+> The repository currently contains a front-end shopping demo, not a production shop. Cart data and demo orders are stored in the browser only; no real orders, accounts, or payments are processed.
 
 ## Features and scope
 
@@ -44,9 +44,11 @@ This repository contains **Task 1: Simple E-Commerce Store** for the CodeAlpha F
 - **Keyboard and motion support:** visible focus outlines, a focus-revealed skip link, and reduced-motion preferences.
 - **Product imagery:** supplied backpack, notebook, and lamp images on the homepage and product details, plus a study-space banner.
 - **Product listings:** product names, descriptions, and prices for an Everyday Backpack, Study Notebook, and Desk Lamp.
+- **Cart interactions:** add products, update quantities, remove items, clear the cart, and review calculated totals.
+- **Browser persistence:** cart data is saved with `localStorage` and validated before being rendered.
+- **Demo checkout:** collect front-end-only delivery details, create a demo order reference, and show a confirmation page.
 - **Store navigation:** connected shopping and account pages, with matching product detail anchors.
-- **Shopping previews:** consistent example cart totals, checkout fields, and an order confirmation layout.
-- **Account forms:** labelled registration and login fields, disabled until secure endpoints exist.
+- **Account forms:** labelled registration and login fields, disabled until secure backend endpoints exist.
 - **Semantic structure:** distinct header, navigation, main content, product articles, and footer.
 - **Keyboard navigation groundwork:** a skip link that moves focus to the main content.
 - **Page metadata:** a descriptive title, meta description, document language, and viewport setting.
@@ -62,7 +64,7 @@ This repository contains **Task 1: Simple E-Commerce Store** for the CodeAlpha F
 | Order processing | Submit a cart and receive an order confirmation |
 | Persistent data | Store products, users, and orders in a database |
 
-These features form the required e-commerce scope. They are planned capabilities, not claims about the current release.
+Cart and demo checkout behavior are implemented in the browser. User accounts, server-side order processing, payments, and database persistence still require the backend stage.
 
 ## Technology
 
@@ -70,7 +72,7 @@ These features form the required e-commerce scope. They are planned capabilities
 | --- | --- | --- |
 | Page structure | HTML5 | Implemented |
 | Styling | CSS | Implemented with Grid, Flexbox, custom properties, and media queries |
-| Browser interactions | JavaScript | File prepared; behavior pending |
+| Browser interactions | JavaScript | Implemented with DOM events, localStorage, validation guards, cart totals, and demo checkout |
 | Version control | Git and GitHub | In use |
 | Backend | To be finalized | Not implemented |
 | Database | To be finalized | Not implemented |
@@ -122,12 +124,12 @@ CodeAlpha_Simple-E-Commerce-Store/
 | --- | --- |
 | [index.html](index.html) | Homepage markup, content, navigation, and product listings |
 | [product.html](product.html) | All three product detail sections, each with its own anchor |
-| [cart.html](cart.html) | Example basket, quantity controls, totals, and a hidden empty state |
-| [checkout.html](checkout.html) | Disabled contact, delivery, and payment-preview form |
-| [order-confirmation.html](order-confirmation.html) | Clearly labelled example order confirmation |
+| [cart.html](cart.html) | Browser-rendered basket, quantity controls, totals, removal actions, and empty state |
+| [checkout.html](checkout.html) | Front-end-only delivery form and calculated order summary |
+| [order-confirmation.html](order-confirmation.html) | Demo order reference, delivery address, purchased items, and totals |
 | [login.html](login.html) / [register.html](register.html) | Disabled account forms with labels and autocomplete hints |
 | [assets/css/style.css](assets/css/style.css) | Shared design tokens, components, page layouts, responsive rules, and print styles, organized in 14 commented sections |
-| [assets/js/main.js](assets/js/main.js) | Dedicated script; currently a placeholder comment |
+| [assets/js/main.js](assets/js/main.js) | Product catalog, cart storage, DOM rendering, checkout handling, and confirmation rendering |
 | `assets/images/` | Supplied product images and two banner options; the alternate banner is not loaded by the pages |
 | [.gitignore](.gitignore) | Excludes environment files, dependencies, build output, and logs |
 | [README.md](README.md) | Public project overview, setup, and implementation status |
@@ -168,11 +170,13 @@ There is no automated test suite yet. The current storefront can be reviewed wit
 | Page loads | Open `index.html` | Store header, three products, about section, and footer appear |
 | Browser title | Inspect the browser tab | “Everyday Essentials \| Simple Store” |
 | Product links | Open each product from the homepage | The matching detail section is targeted |
-| Shopping previews | Open Cart, Preview checkout, then the confirmation preview | Each page opens; all totals agree at PKR 3,600 and no order is placed |
+| Add to cart | Open `index.html`, choose a product, then open Cart | The product appears in the cart and the nav count updates |
+| Product quantity | Open `product.html`, choose a quantity, and add a product | The selected quantity is saved in the cart |
+| Cart controls | Update quantity, remove an item, or clear the cart | Totals update and empty-cart messaging appears when needed |
+| Demo checkout | Fill checkout with cart items present and place the demo order | The browser opens the confirmation page, shows a demo reference, and clears the cart |
 | Account forms | Open Log in and Register | All inputs and submission controls are disabled |
-| Checkout form | Open the checkout preview | Delivery fields are labelled and disabled; no data can be submitted |
+| Checkout validation | Submit checkout with missing required details | The browser shows required-field validation |
 | Skip link | Reload, press Tab, then Enter | Focus moves to the main content |
-| Cart controls | Inspect each product button | Buttons are disabled and an availability notice is visible |
 | Images | Open the homepage and each product detail section | The banner and matching product images appear without stretching |
 | Responsive layout | Resize from desktop to 320px wide | Navigation wraps, content stacks, and the page has no horizontal scrolling |
 | Cart on mobile | Tab to the cart table region; scroll horizontally | All columns remain reachable inside the table panel |
@@ -183,15 +187,15 @@ This checklist describes expected behavior; it is not a report that every browse
 
 ## Roadmap
 
-1. **Storefront structure — complete:** seven connected HTML pages, sample product details, and labelled form previews.
+1. **Storefront structure — complete:** seven connected HTML pages, sample product details, and labelled forms.
 2. **Visual design — complete for the current preview:** responsive CSS, supplied product imagery, shared components, styled forms, and keyboard focus states.
-3. **Shopping interactions** — implement cart state, quantity changes, totals, and form feedback.
+3. **Shopping interactions — complete for the front-end demo:** cart state, quantity changes, totals, browser persistence, and demo order confirmation.
 4. **Backend integration** — add account access, product data, and persistent orders.
 5. **Release preparation** — verify the shopping flow, address security and accessibility issues, deploy, and record the project walkthrough.
 
 ## Study plan
 
-Review the HTML pages alongside the commented stylesheet before starting JavaScript. The initial HTML and CSS milestones are complete for the static preview; markup and styles will still evolve when real cart behavior, validation, and backend data are introduced.
+Review the HTML pages, the commented stylesheet, and `assets/js/main.js` together. The first JavaScript milestone is complete for the browser demo; the next major learning step is connecting the same ideas to an Express backend and database.
 
 ## Author
 

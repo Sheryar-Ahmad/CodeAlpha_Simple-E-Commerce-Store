@@ -34,7 +34,7 @@
         </ol>
       </nav>
       <h1>Product details</h1>
-      <p class="preview-note" id="product-note">Preview catalog: specifications and prices are illustrative. Stock has not been connected, and products cannot be added to a cart yet.</p>
+      <p class="preview-note" id="product-note">Front-end catalog demo: choose a quantity and add products to a browser-saved cart. Stock checks will be connected when the backend is added.</p>
       <nav class="product-tabs" aria-label="Choose a product">
         <ul>
           <li><a href="#backpack">Everyday Backpack</a></li>
@@ -65,13 +65,14 @@
             <li>Main compartment for everyday essentials</li>
             <li>A front pocket for smaller items</li>
           </ul>
-          <!-- Disabled fields prevent pretending that an unbuilt cart works. -->
-          <fieldset disabled aria-describedby="product-note">
+          <form data-product-form data-product-id="backpack" aria-describedby="product-note">
+          <fieldset>
             <legend>Choose a quantity for Everyday Backpack</legend>
             <label for="backpack-quantity">Quantity</label>
-            <input id="backpack-quantity" name="backpack-quantity" type="number" min="1" step="1" value="1" required>
-            <button type="button">Add Everyday Backpack to cart</button>
+            <input id="backpack-quantity" name="quantity" type="number" min="1" max="10" step="1" value="1" required>
+            <button type="submit">Add Everyday Backpack to cart</button>
           </fieldset>
+          </form>
         </div>
       </article>
 
@@ -96,13 +97,14 @@
             <li>Lined pages for organized notes</li>
             <li>A navy cover and spiral binding for everyday use</li>
           </ul>
-          <!-- Disabled fields prevent pretending that an unbuilt cart works. -->
-          <fieldset disabled aria-describedby="product-note">
+          <form data-product-form data-product-id="notebook" aria-describedby="product-note">
+          <fieldset>
             <legend>Choose a quantity for Study Notebook</legend>
             <label for="notebook-quantity">Quantity</label>
-            <input id="notebook-quantity" name="notebook-quantity" type="number" min="1" step="1" value="1" required>
-            <button type="button">Add Study Notebook to cart</button>
+            <input id="notebook-quantity" name="quantity" type="number" min="1" max="10" step="1" value="1" required>
+            <button type="submit">Add Study Notebook to cart</button>
           </fieldset>
+          </form>
         </div>
       </article>
 
@@ -127,13 +129,14 @@
             <li>Compact design for a study space</li>
             <li>Adjustable light direction</li>
           </ul>
-          <!-- Disabled fields prevent pretending that an unbuilt cart works. -->
-          <fieldset disabled aria-describedby="product-note">
+          <form data-product-form data-product-id="lamp" aria-describedby="product-note">
+          <fieldset>
             <legend>Choose a quantity for Desk Lamp</legend>
             <label for="lamp-quantity">Quantity</label>
-            <input id="lamp-quantity" name="lamp-quantity" type="number" min="1" step="1" value="1" required>
-            <button type="button">Add Desk Lamp to cart</button>
+            <input id="lamp-quantity" name="quantity" type="number" min="1" max="10" step="1" value="1" required>
+            <button type="submit">Add Desk Lamp to cart</button>
           </fieldset>
+          </form>
         </div>
       </article>
 

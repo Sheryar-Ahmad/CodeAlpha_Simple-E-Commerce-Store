@@ -29,48 +29,47 @@
     <!-- Each page has one main region and one h1 heading. -->
     <main id="main-content" tabindex="-1">
       <p class="eyebrow">The final step</p>
-      <h1>Order confirmation preview</h1>
-      <p class="preview-note"><strong>No order has been placed.</strong> This page demonstrates the information a confirmation will display after a successful order.</p>
+      <h1>Order confirmation</h1>
+      <p class="preview-note">This is a browser-only demo confirmation. A real order confirmation will require a secure backend and database.</p>
 
       <div class="confirmation-grid">
         <section class="panel" aria-labelledby="order-title">
-          <h2 id="order-title">Example order details</h2>
-          <!-- Replace this sample information only after the server confirms an order. -->
+          <h2 id="order-title">Order details</h2>
+          <!-- The script fills these values from the latest browser-only demo order. -->
           <dl>
             <dt>Order reference</dt>
-            <dd>DEMO-1001</dd>
+            <dd data-order-reference>No demo order found</dd>
             <dt>Status</dt>
-            <dd>Preview only</dd>
+            <dd data-order-status>Browser demo</dd>
             <dt>Delivery address</dt>
-            <dd>The address from the completed checkout will appear here.</dd>
+            <dd data-order-address>Complete checkout to show a delivery address.</dd>
             <dt>Payment method</dt>
             <dd>Cash on delivery (example only)</dd>
           </dl>
         </section>
 
         <section class="panel order-summary" aria-labelledby="purchased-title">
-          <h2 id="purchased-title">Example items</h2>
-          <ul>
-            <li><a href="product.html#backpack">Everyday Backpack</a> &times; 1: PKR 2,500</li>
-            <li><a href="product.html#notebook">Study Notebook</a> &times; 2: PKR 900</li>
+          <h2 id="purchased-title">Ordered items</h2>
+          <ul data-confirmation-items>
+            <li>No demo order items yet.</li>
           </ul>
           <dl>
             <dt>Subtotal</dt>
-            <dd>PKR 3,400</dd>
-            <dt>Delivery (example charge)</dt>
-            <dd>PKR 200</dd>
+            <dd data-cart-subtotal>PKR 0</dd>
+            <dt>Delivery</dt>
+            <dd data-cart-delivery>PKR 0</dd>
             <dt>Total</dt>
-            <dd><strong>PKR 3,600</strong></dd>
+            <dd><strong data-cart-total>PKR 0</strong></dd>
           </dl>
         </section>
 
       </div>
       <section class="panel updates-panel" aria-labelledby="next-title">
         <h2 id="next-title">Order updates</h2>
-        <p>Order progress will be available when order processing is implemented. No confirmation email has been sent from this preview.</p>
+        <p>Order progress and confirmation emails will be available after backend order processing is implemented.</p>
       </section>
       <a class="button" href="index.html#products">Continue browsing</a>
-      <a class="button button-secondary" href="checkout.html">Back to checkout preview</a>
+      <a class="button button-secondary" href="checkout.html">Back to checkout</a>
     </main>
 
     <footer class="site-footer">

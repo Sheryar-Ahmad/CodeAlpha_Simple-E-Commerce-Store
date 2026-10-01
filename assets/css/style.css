@@ -316,6 +316,16 @@ button:disabled {
   line-height: 1.65;
 }
 
+[data-store-status] {
+  padding: 0.85rem 1rem;
+  margin-bottom: 1.5rem;
+  border-left: 3px solid var(--color-teal);
+  border-radius: 0 var(--radius-small) var(--radius-small) 0;
+  background: #eef9f8;
+  color: var(--color-ink);
+  font-size: 0.9rem;
+}
+
 .panel {
   min-width: 0;
   padding: 1.5rem;

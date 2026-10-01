@@ -41,7 +41,7 @@
       <section class="collection" id="products" aria-labelledby="products-title">
         <p class="eyebrow">The essentials collection</p>
         <h2 id="products-title">A little more focus. A little less clutter.</h2>
-        <p class="preview-note" id="shopping-note">Store preview: products and prices are examples. Ordering is not available yet.</p>
+        <p class="preview-note" id="shopping-note">Front-end store demo: products can be added to a browser-saved cart. Checkout is still a client-side preview until the backend is added.</p>
         <!-- Each article describes one product; links open its matching details. -->
         <ul class="product-grid">
           <li>
@@ -51,7 +51,7 @@
               <p>A simple backpack for books, stationery, and daily essentials.</p>
               <p class="price">Price: <data value="2500">PKR 2,500</data></p>
               <a class="detail-link" href="product.html#backpack">View Everyday Backpack details</a>
-              <button type="button" disabled aria-describedby="shopping-note">Add Everyday Backpack to cart</button>
+              <button type="button" data-add-to-cart data-product-id="backpack" aria-describedby="shopping-note">Add Everyday Backpack to cart</button>
             </article>
           </li>
           <li>
@@ -61,7 +61,7 @@
               <p>A lined notebook for class notes, ideas, and daily plans.</p>
               <p class="price">Price: <data value="450">PKR 450</data></p>
               <a class="detail-link" href="product.html#notebook">View Study Notebook details</a>
-              <button type="button" disabled aria-describedby="shopping-note">Add Study Notebook to cart</button>
+              <button type="button" data-add-to-cart data-product-id="notebook" aria-describedby="shopping-note">Add Study Notebook to cart</button>
             </article>
           </li>
           <li>
@@ -71,7 +71,7 @@
               <p>A compact lamp for your reading corner or study desk.</p>
               <p class="price">Price: <data value="1800">PKR 1,800</data></p>
               <a class="detail-link" href="product.html#lamp">View Desk Lamp details</a>
-              <button type="button" disabled aria-describedby="shopping-note">Add Desk Lamp to cart</button>
+              <button type="button" data-add-to-cart data-product-id="lamp" aria-describedby="shopping-note">Add Desk Lamp to cart</button>
             </article>
           </li>
         </ul>
