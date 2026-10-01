@@ -114,8 +114,6 @@ CodeAlpha_Simple-E-Commerce-Store/
 │   ├── css/style.css
 │   ├── js/main.js
 │   └── images/
-├── docs/
-│   └── HTML_GUIDE.md
 ├── .gitignore
 └── README.md
 ```
@@ -128,7 +126,6 @@ CodeAlpha_Simple-E-Commerce-Store/
 | [checkout.html](checkout.html) | Disabled contact, delivery, and payment-preview form |
 | [order-confirmation.html](order-confirmation.html) | Clearly labelled example order confirmation |
 | [login.html](login.html) / [register.html](register.html) | Disabled account forms with labels and autocomplete hints |
-| [docs/HTML_GUIDE.md](docs/HTML_GUIDE.md) | Page-by-page explanation and study exercises |
 | [assets/css/style.css](assets/css/style.css) | Shared design tokens, components, page layouts, responsive rules, and print styles, organized in 14 commented sections |
 | [assets/js/main.js](assets/js/main.js) | Dedicated script; currently a placeholder comment |
 | `assets/images/` | Supplied product images and two banner options; the alternate banner is not loaded by the pages |
@@ -192,9 +189,9 @@ This checklist describes expected behavior; it is not a report that every browse
 4. **Backend integration** — add account access, product data, and persistent orders.
 5. **Release preparation** — verify the shopping flow, address security and accessibility issues, deploy, and record the project walkthrough..
 
-## Study the HTML
+## Study plan
 
-Read [the HTML guide](docs/HTML_GUIDE.md) for a suggested reading order, explanations of the elements and attributes, sample calculations, and exercises. The initial HTML milestone is complete; markup will still evolve as real data and interactions are introduced.
+Review the HTML pages alongside the commented stylesheet before starting JavaScript. The initial HTML and CSS milestones are complete for the static preview; markup and styles will still evolve when real cart behavior, validation, and backend data are introduced.
 
 ## Author
 
