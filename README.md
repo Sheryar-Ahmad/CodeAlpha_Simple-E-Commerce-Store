@@ -190,7 +190,7 @@ This checklist describes expected behavior; it is not a report that every browse
 2. **Visual design — complete for the current preview:** responsive CSS, supplied product imagery, shared components, styled forms, and keyboard focus states.
 3. **Shopping interactions** — implement cart state, quantity changes, totals, and form feedback.
 4. **Backend integration** — add account access, product data, and persistent orders.
-5. **Release preparation** — verify the shopping flow, address security and accessibility issues, deploy, and record the project walkthrough.
+5. **Release preparation** — verify the shopping flow, address security and accessibility issues, deploy, and record the project walkthrough..
 
 ## Study the HTML
 
