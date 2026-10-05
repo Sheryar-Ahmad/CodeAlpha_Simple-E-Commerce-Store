@@ -36,10 +36,10 @@
           <a href="index.html#products">Explore the collection &rarr;</a>
         </div>
         <div class="auth-card">
-          <p class="preview-note" id="login-note">Account preview: sign-in is not connected yet. Fields are disabled, and no credentials are collected.</p>
-          <!-- Never use GET for passwords. Enable this form only with a secure backend. -->
-          <form action="login.html" method="post" aria-describedby="login-note">
-            <fieldset disabled>
+          <p class="preview-note" id="login-note">Sign in to place orders and review your account details. Credentials are sent to the local Express API for this project.</p>
+          <!-- Never use GET for passwords. The Express API validates credentials and returns a JWT. -->
+          <form action="login.html" method="post" aria-describedby="login-note" data-login-form>
+            <fieldset>
               <legend>Your account</legend>
               <p>
                 <label for="login-email">Email address (required)</label>

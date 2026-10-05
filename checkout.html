@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Preview delivery information fields and an example order summary.">
+    <meta name="description" content="Enter delivery information and submit an authenticated Simple Store order.">
     <meta name="robots" content="noindex, nofollow">
-    <title>Checkout Preview | Simple Store</title>
+    <title>Checkout | Simple Store</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="assets/js/main.js" defer></script>
   </head>
@@ -30,12 +30,12 @@
     <main id="main-content" tabindex="-1">
       <nav class="breadcrumb" aria-label="Breadcrumb">
         <ol>
-          <li><a href="cart.html">Cart preview</a></li>
-          <li><span aria-current="page">Checkout preview</span></li>
+          <li><a href="cart.html">Cart</a></li>
+          <li><span aria-current="page">Checkout</span></li>
         </ol>
       </nav>
-      <h1>Checkout preview</h1>
-      <p class="preview-note" id="checkout-note">Checkout is a front-end demo. Details are used only to build a browser-only order preview; no payment is collected and no backend receives this information.</p>
+      <h1>Checkout</h1>
+      <p class="preview-note" id="checkout-note">Checkout sends your delivery details and cart items to the local Express API. Payment is cash on delivery for this project version.</p>
 
       <!-- POST keeps future form data out of URLs. The script prevents submission today.
       A real endpoint, server validation, authentication, and CSRF protection must be added later. -->
@@ -89,10 +89,10 @@
           </fieldset>
 
           <fieldset class="form-panel">
-            <legend>Payment method preview</legend>
+            <legend>Payment method</legend>
             <input id="cash-on-delivery" name="paymentMethod" type="radio" value="cash-on-delivery" checked>
-            <label for="cash-on-delivery">Cash on delivery (example only)</label>
-            <p>Payment is not processed in this front-end demo.</p>
+            <label for="cash-on-delivery">Cash on delivery</label>
+            <p>Payment is collected on delivery in this project version.</p>
           </fieldset>
 
         </div>
@@ -112,7 +112,7 @@
             </dl>
           </section>
           <p id="checkout-error" role="alert" hidden></p>
-          <button type="submit" aria-describedby="checkout-note">Place demo order</button>
+          <button type="submit" aria-describedby="checkout-note">Place order</button>
         </div>
       </form>
       <a href="cart.html">Back to cart</a>

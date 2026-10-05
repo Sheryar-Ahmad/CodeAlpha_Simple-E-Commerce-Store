@@ -30,28 +30,28 @@
     <main id="main-content" tabindex="-1">
       <p class="eyebrow">The final step</p>
       <h1>Order confirmation</h1>
-      <p class="preview-note">This is a browser-only demo confirmation. A real order confirmation will require a secure backend and database.</p>
+      <p class="preview-note">This page shows the latest order returned by the local Express API. Keep the backend and MongoDB running while testing.</p>
 
       <div class="confirmation-grid">
         <section class="panel" aria-labelledby="order-title">
           <h2 id="order-title">Order details</h2>
-          <!-- The script fills these values from the latest browser-only demo order. -->
+          <!-- The script fills these values from the latest order saved by the API. -->
           <dl>
             <dt>Order reference</dt>
-            <dd data-order-reference>No demo order found</dd>
+            <dd data-order-reference>No order found</dd>
             <dt>Status</dt>
-            <dd data-order-status>Browser demo</dd>
+            <dd data-order-status>Waiting for order</dd>
             <dt>Delivery address</dt>
             <dd data-order-address>Complete checkout to show a delivery address.</dd>
             <dt>Payment method</dt>
-            <dd>Cash on delivery (example only)</dd>
+            <dd>Cash on delivery</dd>
           </dl>
         </section>
 
         <section class="panel order-summary" aria-labelledby="purchased-title">
           <h2 id="purchased-title">Ordered items</h2>
           <ul data-confirmation-items>
-            <li>No demo order items yet.</li>
+            <li>No order items yet.</li>
           </ul>
           <dl>
             <dt>Subtotal</dt>
@@ -66,7 +66,7 @@
       </div>
       <section class="panel updates-panel" aria-labelledby="next-title">
         <h2 id="next-title">Order updates</h2>
-        <p>Order progress and confirmation emails will be available after backend order processing is implemented.</p>
+        <p>Order progress emails are not implemented yet, but the submitted order is saved by the API when MongoDB is running.</p>
       </section>
       <a class="button" href="index.html#products">Continue browsing</a>
       <a class="button button-secondary" href="checkout.html">Back to checkout</a>

@@ -36,10 +36,10 @@
           <a href="index.html#products">Explore the collection &rarr;</a>
         </div>
         <div class="auth-card">
-          <p class="preview-note" id="register-note">Account preview: registration is not connected yet. Fields are disabled, and no personal information is collected.</p>
+          <p class="preview-note" id="register-note">Create an account through the local Express API before placing an order. Passwords are hashed on the server.</p>
           <!-- HTML checks are a usability aid; the future server must validate inputs too. -->
-          <form action="register.html" method="post" aria-describedby="register-note">
-            <fieldset disabled>
+          <form action="register.html" method="post" aria-describedby="register-note" data-register-form>
+            <fieldset>
               <legend>Account details</legend>
               <p>
                 <label for="register-name">Full name (required)</label>
@@ -58,7 +58,7 @@
                 <label for="confirm-password">Confirm password (required)</label>
                 <input id="confirm-password" name="confirmPassword" type="password" autocomplete="new-password" minlength="12" maxlength="128" required>
               </p>
-              <!-- Matching passwords must be checked when behavior is implemented. -->
+              <!-- JavaScript checks matching passwords before the request reaches the API. -->
               <button type="submit">Create account</button>
             </fieldset>
             <p id="register-error" role="alert" hidden></p>

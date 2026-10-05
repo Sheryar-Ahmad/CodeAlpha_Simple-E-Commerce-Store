@@ -3,7 +3,8 @@
   --------------------------------
   This file keeps the first JavaScript milestone small and readable:
   - product data lives in one catalog object
-  - cart data is saved in localStorage
+  - cart and auth data are saved in localStorage
+  - checkout sends real orders to the Express API when a user is logged in
   - every value from storage is validated before use
   - the DOM is updated with textContent/createElement, not unsafe HTML strings
 */
@@ -44,6 +45,35 @@ function formatMoney(amount) {
   return currencyFormatter.format(amount).replace("PKR", "PKR ");
 }
 
+async function apiRequest(path, options = {}) {
+  const { method = "GET", body, token = getStoredAuth()?.token } = options;
+  const headers = { "Content-Type": "application/json" };
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  let response;
+
+  try {
+    response = await fetch(`${API_BASE_URL}${path}`, {
+      method,
+      headers,
+      body: body ? JSON.stringify(body) : undefined
+    });
+  } catch (error) {
+    throw new Error("Could not reach the API server. Start the backend and try again.");
+  }
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(data.message || "Something went wrong. Please try again.");
+  }
+
+  return data;
+}
+
 function clampQuantity(value) {
   const quantity = Number.parseInt(value, 10);
 
@@ -75,6 +105,31 @@ function getStoredCart() {
 function saveCart(cart) {
   localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
   updateCartCount();
+}
+
+function getStoredAuth() {
+  try {
+    const auth = JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY));
+
+    if (!auth?.token || !auth?.user?.email) {
+      return null;
+    }
+
+    return auth;
+  } catch (error) {
+    localStorage.removeItem(AUTH_STORAGE_KEY);
+    return null;
+  }
+}
+
+function saveAuth(auth) {
+  localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(auth));
+  updateAuthNavigation();
+}
+
+function clearAuth() {
+  localStorage.removeItem(AUTH_STORAGE_KEY);
+  updateAuthNavigation();
 }
 
 function getCartItems(cart = getStoredCart()) {
@@ -162,6 +217,51 @@ function updateCartCount() {
     cartLink.textContent = totalItems > 0 ? label : "Cart";
     cartLink.setAttribute("aria-label", label);
   });
+}
+
+function updateAuthNavigation() {
+  const auth = getStoredAuth();
+  const loginLinks = document.querySelectorAll('a[href="login.html"]');
+  const registerLinks = document.querySelectorAll('a[href="register.html"]');
+
+  loginLinks.forEach((link) => {
+    link.textContent = auth ? auth.user.fullName : "Log in";
+    link.setAttribute("aria-label", auth ? `Signed in as ${auth.user.fullName}` : "Log in");
+  });
+
+  registerLinks.forEach((link) => {
+    if (auth) {
+      link.textContent = "Log out";
+      link.href = "#logout";
+      link.dataset.logout = "";
+    } else {
+      link.textContent = "Register";
+      link.href = "register.html";
+      delete link.dataset.logout;
+    }
+  });
+}
+
+function showFormError(form, message) {
+  const error = form.querySelector('[role="alert"]');
+
+  if (!error) {
+    return;
+  }
+
+  error.textContent = message;
+  error.hidden = false;
+}
+
+function clearFormError(form) {
+  const error = form.querySelector('[role="alert"]');
+
+  if (!error) {
+    return;
+  }
+
+  error.textContent = "";
+  error.hidden = true;
 }
 
 function updateSummaryTotals(totals) {
@@ -329,8 +429,14 @@ function getCheckoutFormData(form) {
   };
 }
 
-function placeDemoOrder(form) {
+async function placeOrder(form) {
+  const auth = getStoredAuth();
   const totals = getCartTotals();
+
+  if (!auth) {
+    showCheckoutError("Please log in or create an account before placing an order.");
+    return;
+  }
 
   if (totals.items.length === 0) {
     showCheckoutError("Add at least one product before placing an order.");
@@ -342,19 +448,28 @@ function placeDemoOrder(form) {
     return;
   }
 
-  const order = {
-    reference: `DEMO-${Date.now().toString().slice(-6)}`,
-    createdAt: new Date().toISOString(),
-    customer: getCheckoutFormData(form),
-    items: totals.items,
-    subtotal: totals.subtotal,
-    delivery: totals.delivery,
-    total: totals.total
-  };
+  const submitButton = form.querySelector('button[type="submit"]');
+  submitButton.disabled = true;
+  submitButton.textContent = "Placing order...";
 
-  localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(order));
-  saveCart({});
-  window.location.href = "order-confirmation.html";
+  try {
+    const data = await apiRequest("/orders", {
+      method: "POST",
+      body: {
+        items: totals.items.map((item) => ({ slug: item.id, quantity: item.quantity })),
+        shippingAddress: getCheckoutFormData(form),
+        paymentMethod: "cash-on-delivery"
+      }
+    });
+
+    localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(data.order));
+    saveCart({});
+    window.location.href = "order-confirmation.html";
+  } catch (error) {
+    showCheckoutError(error.message);
+    submitButton.disabled = false;
+    submitButton.textContent = "Place order";
+  }
 }
 
 function getStoredOrder() {
@@ -365,26 +480,44 @@ function getStoredOrder() {
       return null;
     }
 
-    const safeCart = {};
+    const items = order.items
+      .map((item) => {
+        const slug = String(item.slug || item.id || "").trim();
+        const fallbackProduct = PRODUCTS[slug];
+        const quantity = clampQuantity(item.quantity);
+        const price = Number(item.price || fallbackProduct?.price || 0);
 
-    order.items.forEach((item) => {
-      if (PRODUCTS[item.id]) {
-        safeCart[item.id] = clampQuantity(item.quantity);
-      }
-    });
+        if (!slug || !price) {
+          return null;
+        }
 
-    const totals = getCartTotals(safeCart);
+        return {
+          id: slug,
+          name: String(item.name || fallbackProduct?.name || "Product"),
+          price,
+          quantity,
+          url: fallbackProduct?.url || `product.html#${slug}`,
+          lineTotal: price * quantity
+        };
+      })
+      .filter(Boolean);
 
-    if (totals.items.length === 0) {
+    if (items.length === 0) {
       return null;
     }
 
+    const subtotal = Number(order.subtotal || items.reduce((total, item) => total + item.lineTotal, 0));
+    const delivery = Number(order.delivery || order.deliveryCharge || (subtotal > 0 ? DELIVERY_CHARGE : 0));
+    const shippingAddress = order.shippingAddress || order.customer || {};
+
     return {
-      ...order,
-      items: totals.items,
-      subtotal: totals.subtotal,
-      delivery: totals.delivery,
-      total: totals.total
+      reference: order.reference || `ORDER-${String(order._id || "").slice(-6).toUpperCase()}`,
+      status: order.status || "placed",
+      shippingAddress,
+      items,
+      subtotal,
+      delivery,
+      total: Number(order.total || subtotal + delivery)
     };
   } catch (error) {
     localStorage.removeItem(ORDER_STORAGE_KEY);
@@ -463,6 +596,93 @@ function bindCartActions() {
   });
 }
 
+function bindAuthForms() {
+  const loginForm = document.querySelector("[data-login-form]");
+  const registerForm = document.querySelector("[data-register-form]");
+
+  if (loginForm) {
+    loginForm.addEventListener("input", () => clearFormError(loginForm));
+    loginForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (!loginForm.checkValidity()) {
+        loginForm.reportValidity();
+        return;
+      }
+
+      const formData = new FormData(loginForm);
+
+      try {
+        const auth = await apiRequest("/auth/login", {
+          method: "POST",
+          token: null,
+          body: {
+            email: String(formData.get("email") || "").trim(),
+            password: String(formData.get("password") || "")
+          }
+        });
+
+        saveAuth(auth);
+        window.location.href = getCartItems().length > 0 ? "checkout.html" : "index.html";
+      } catch (error) {
+        showFormError(loginForm, error.message);
+      }
+    });
+  }
+
+  if (registerForm) {
+    registerForm.addEventListener("input", () => clearFormError(registerForm));
+    registerForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(registerForm);
+      const password = String(formData.get("password") || "");
+      const confirmPassword = String(formData.get("confirmPassword") || "");
+
+      if (password !== confirmPassword) {
+        showFormError(registerForm, "Passwords do not match.");
+        return;
+      }
+
+      if (!registerForm.checkValidity()) {
+        registerForm.reportValidity();
+        return;
+      }
+
+      try {
+        const auth = await apiRequest("/auth/register", {
+          method: "POST",
+          token: null,
+          body: {
+            fullName: String(formData.get("fullName") || "").trim(),
+            email: String(formData.get("email") || "").trim(),
+            password
+          }
+        });
+
+        saveAuth(auth);
+        window.location.href = getCartItems().length > 0 ? "checkout.html" : "index.html";
+      } catch (error) {
+        showFormError(registerForm, error.message);
+      }
+    });
+  }
+}
+
+function bindLogoutLinks() {
+  document.addEventListener("click", (event) => {
+    const logoutLink = event.target.closest("[data-logout]");
+
+    if (!logoutLink) {
+      return;
+    }
+
+    event.preventDefault();
+    clearAuth();
+    setStatusMessage("You have been logged out.");
+  });
+}
+
 function bindCheckoutForm() {
   const form = document.querySelector("[data-checkout-form]");
 
@@ -473,14 +693,17 @@ function bindCheckoutForm() {
   form.addEventListener("input", clearCheckoutError);
   form.addEventListener("submit", (event) => {
     event.preventDefault();
-    placeDemoOrder(form);
+    placeOrder(form);
   });
 }
 
 bindProductButtons();
 bindCartActions();
+bindAuthForms();
+bindLogoutLinks();
 bindCheckoutForm();
 updateCartCount();
+updateAuthNavigation();
 renderCartPage();
 renderCheckoutPage();
 renderConfirmationPage();
