@@ -5,6 +5,7 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
+import authRoutes from "./routes/authRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 
 export function createApp() {
@@ -37,6 +38,7 @@ export function createApp() {
     });
   });
 
+  app.use("/api/auth", authRoutes);
   app.use("/api/products", productRoutes);
 
   app.use(notFound);
