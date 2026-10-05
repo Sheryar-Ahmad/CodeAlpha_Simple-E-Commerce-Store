@@ -26,14 +26,14 @@ This repository contains **Task 1: Simple E-Commerce Store** for the CodeAlpha F
 
 | Item | Current state |
 | --- | --- |
-| Development stage | HTML, responsive CSS, and front-end JavaScript shopping flow complete |
+| Development stage | Full-stack e-commerce foundation complete |
 | Available pages | Homepage, product details, cart, checkout, confirmation, login, and registration |
 | Visual design | Navy-and-cream theme, responsive product layouts, and styled account, cart, and checkout screens |
-| Shopping functionality | Browser-saved cart, quantity updates, cart totals, demo checkout, and demo confirmation |
-| Backend and database | Not implemented |
+| Shopping functionality | Browser-saved cart, quantity updates, cart totals, authenticated checkout, and saved orders |
+| Backend and database | Express API, MongoDB models, JWT auth, product seeding, and protected order routes |
 | Deployment | No live deployment configured |
 
-> The repository currently contains a front-end shopping demo, not a production shop. Cart data and demo orders are stored in the browser only; no real orders, accounts, or payments are processed.
+> This is a learning-focused full-stack project. It supports local account creation, login, product seeding, and order saving with MongoDB. Payments are represented as cash on delivery; no real payment gateway is connected.
 
 ## Features and scope
 
@@ -46,9 +46,12 @@ This repository contains **Task 1: Simple E-Commerce Store** for the CodeAlpha F
 - **Product listings:** product names, descriptions, and prices for an Everyday Backpack, Study Notebook, and Desk Lamp.
 - **Cart interactions:** add products, update quantities, remove items, clear the cart, and review calculated totals.
 - **Browser persistence:** cart data is saved with `localStorage` and validated before being rendered.
-- **Demo checkout:** collect front-end-only delivery details, create a demo order reference, and show a confirmation page.
+- **Authenticated checkout:** submit delivery details and cart items to the Express API.
+- **Backend order processing:** recalculate product prices server-side before saving orders.
+- **User accounts:** registration and login with password hashing and JWT-based authentication.
+- **Product API:** MongoDB product model, product routes, and seed data for the storefront catalog.
 - **Store navigation:** connected shopping and account pages, with matching product detail anchors.
-- **Account forms:** labelled registration and login fields, disabled until secure backend endpoints exist.
+- **Account forms:** labelled registration and login fields connected to the local backend API.
 - **Semantic structure:** distinct header, navigation, main content, product articles, and footer.
 - **Keyboard navigation groundwork:** a skip link that moves focus to the main content.
 - **Page metadata:** a descriptive title, meta description, document language, and viewport setting.
@@ -60,11 +63,11 @@ This repository contains **Task 1: Simple E-Commerce Store** for the CodeAlpha F
 | --- | --- |
 | Product details | View a product's description, image, price, and availability |
 | Shopping cart | Add or remove products, update quantities, and review totals |
-| User accounts | Register, sign in, and access protected account features |
-| Order processing | Submit a cart and receive an order confirmation |
-| Persistent data | Store products, users, and orders in a database |
+| User accounts | Register, sign in, and receive a JWT |
+| Order processing | Submit a cart through a protected backend route and receive an order confirmation |
+| Persistent data | Store products, users, and orders in MongoDB |
 
-Cart and demo checkout behavior are implemented in the browser. User accounts, server-side order processing, payments, and database persistence still require the backend stage.
+The current backend covers the required e-commerce foundation. Admin tools, payment gateway integration, emails, and production deployment are future improvements.
 
 ## Technology
 
@@ -72,12 +75,12 @@ Cart and demo checkout behavior are implemented in the browser. User accounts, s
 | --- | --- | --- |
 | Page structure | HTML5 | Implemented |
 | Styling | CSS | Implemented with Grid, Flexbox, custom properties, and media queries |
-| Browser interactions | JavaScript | Implemented with DOM events, localStorage, validation guards, cart totals, and demo checkout |
+| Browser interactions | JavaScript | Implemented with DOM events, localStorage, auth token storage, cart totals, and API submission |
 | Version control | Git and GitHub | In use |
-| Backend | To be finalized | Not implemented |
-| Database | To be finalized | Not implemented |
+| Backend | Node.js and Express | Implemented with product, auth, and order APIs |
+| Database | MongoDB and Mongoose | Implemented with Product, User, and Order models |
 
-The current version has **no third-party runtime dependencies** and requires no build process.
+The frontend has no build step. The backend uses npm dependencies inside the `server` folder.
 
 ## Getting started
 
@@ -99,7 +102,17 @@ Alternatively, download the repository using **Code → Download ZIP** and extra
 
 Open [index.html](index.html) in your browser. On Windows, you can double-click the file in File Explorer.
 
-No `npm install`, server startup, database connection, or environment configuration is required at this stage. All seven pages share the stylesheet in `assets/css/style.css`; no external fonts or CSS frameworks are loaded.
+To test the full-stack flow, run the backend first:
+
+```bash
+cd server
+npm install
+copy .env.example .env
+npm run seed
+npm run dev
+```
+
+MongoDB must be running before seeding or starting the backend. The default API URL used by the frontend is `http://localhost:5000/api`.
 
 ## Repository structure
 
@@ -116,6 +129,11 @@ CodeAlpha_Simple-E-Commerce-Store/
 │   ├── css/style.css
 │   ├── js/main.js
 │   └── images/
+├── docs/
+│   └── BACKEND_GUIDE.md
+├── server/
+│   ├── package.json
+│   └── src/
 ├── .gitignore
 └── README.md
 ```
@@ -125,11 +143,13 @@ CodeAlpha_Simple-E-Commerce-Store/
 | [index.html](index.html) | Homepage markup, content, navigation, and product listings |
 | [product.html](product.html) | All three product detail sections, each with its own anchor |
 | [cart.html](cart.html) | Browser-rendered basket, quantity controls, totals, removal actions, and empty state |
-| [checkout.html](checkout.html) | Front-end-only delivery form and calculated order summary |
-| [order-confirmation.html](order-confirmation.html) | Demo order reference, delivery address, purchased items, and totals |
-| [login.html](login.html) / [register.html](register.html) | Disabled account forms with labels and autocomplete hints |
+| [checkout.html](checkout.html) | Delivery form that submits authenticated orders to the API |
+| [order-confirmation.html](order-confirmation.html) | Latest saved order reference, delivery address, purchased items, and totals |
+| [login.html](login.html) / [register.html](register.html) | Account forms connected to the authentication API |
 | [assets/css/style.css](assets/css/style.css) | Shared design tokens, components, page layouts, responsive rules, and print styles, organized in 14 commented sections |
-| [assets/js/main.js](assets/js/main.js) | Product catalog, cart storage, DOM rendering, checkout handling, and confirmation rendering |
+| [assets/js/main.js](assets/js/main.js) | Cart storage, auth handling, API calls, checkout submission, and confirmation rendering |
+| [server/](server/) | Express API, Mongoose models, seed data, routes, controllers, and middleware |
+| [docs/BACKEND_GUIDE.md](docs/BACKEND_GUIDE.md) | Beginner-friendly explanation of the backend architecture |
 | `assets/images/` | Supplied product images and two banner options; the alternate banner is not loaded by the pages |
 | [.gitignore](.gitignore) | Excludes environment files, dependencies, build output, and logs |
 | [README.md](README.md) | Public project overview, setup, and implementation status |
@@ -173,8 +193,8 @@ There is no automated test suite yet. The current storefront can be reviewed wit
 | Add to cart | Open `index.html`, choose a product, then open Cart | The product appears in the cart and the nav count updates |
 | Product quantity | Open `product.html`, choose a quantity, and add a product | The selected quantity is saved in the cart |
 | Cart controls | Update quantity, remove an item, or clear the cart | Totals update and empty-cart messaging appears when needed |
-| Demo checkout | Fill checkout with cart items present and place the demo order | The browser opens the confirmation page, shows a demo reference, and clears the cart |
-| Account forms | Open Log in and Register | All inputs and submission controls are disabled |
+| Register and login | Start the backend, then submit the account forms | A JWT is saved in the browser and navigation updates |
+| Checkout | Log in, fill checkout with cart items present, and place the order | The API saves the order, the cart clears, and confirmation shows the saved order |
 | Checkout validation | Submit checkout with missing required details | The browser shows required-field validation |
 | Skip link | Reload, press Tab, then Enter | Focus moves to the main content |
 | Images | Open the homepage and each product detail section | The banner and matching product images appear without stretching |
@@ -189,13 +209,13 @@ This checklist describes expected behavior; it is not a report that every browse
 
 1. **Storefront structure — complete:** seven connected HTML pages, sample product details, and labelled forms.
 2. **Visual design — complete for the current preview:** responsive CSS, supplied product imagery, shared components, styled forms, and keyboard focus states.
-3. **Shopping interactions — complete for the front-end demo:** cart state, quantity changes, totals, browser persistence, and demo order confirmation.
-4. **Backend integration** — add account access, product data, and persistent orders.
+3. **Shopping interactions — complete:** cart state, quantity changes, totals, browser persistence, and checkout submission.
+4. **Backend integration — complete for the project scope:** account access, product data, and persistent orders.
 5. **Release preparation** — verify the shopping flow, address security and accessibility issues, deploy, and record the project walkthrough.
 
 ## Study plan
 
-Review the HTML pages, the commented stylesheet, and `assets/js/main.js` together. The first JavaScript milestone is complete for the browser demo; the next major learning step is connecting the same ideas to an Express backend and database.
+Review the HTML pages, the commented stylesheet, `assets/js/main.js`, and [docs/BACKEND_GUIDE.md](docs/BACKEND_GUIDE.md) together. The project now has the core MERN-style learning pieces: frontend pages, browser JavaScript, Express routes, MongoDB models, authentication, and order processing.
 
 ## Author
 
