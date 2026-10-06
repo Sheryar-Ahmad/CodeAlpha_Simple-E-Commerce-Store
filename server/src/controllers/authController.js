@@ -1,6 +1,12 @@
 import validator from "validator";
 
 import { User } from "../models/User.js";
+import {
+  compareMemoryPassword,
+  createMemoryUser,
+  findMemoryUserByEmail,
+  isMemoryMode
+} from "../data/memoryStore.js";
 import { createToken } from "../utils/tokens.js";
 
 function sendAuthResponse(res, user, statusCode = 200) {
@@ -35,13 +41,18 @@ export async function register(req, res, next) {
       return res.status(400).json({ message: "Password must be between 12 and 128 characters." });
     }
 
-    const existingUser = await User.findOne({ email }).select("_id").lean();
+    const existingUser = isMemoryMode()
+      ? findMemoryUserByEmail(email)
+      : await User.findOne({ email }).select("_id").lean();
 
     if (existingUser) {
       return res.status(409).json({ message: "An account with this email already exists." });
     }
 
-    const user = await User.create({ fullName, email, password });
+    const user = isMemoryMode()
+      ? await createMemoryUser({ fullName, email, password })
+      : await User.create({ fullName, email, password });
+
     return sendAuthResponse(res, user, 201);
   } catch (error) {
     return next(error);
@@ -57,13 +68,17 @@ export async function login(req, res, next) {
       return res.status(401).json({ message: "Invalid email or password." });
     }
 
-    const user = await User.findOne({ email }).select("+password fullName email role");
+    const user = isMemoryMode()
+      ? findMemoryUserByEmail(email)
+      : await User.findOne({ email }).select("+password fullName email role");
 
     if (!user) {
       return res.status(401).json({ message: "Invalid email or password." });
     }
 
-    const passwordMatches = await user.comparePassword(password);
+    const passwordMatches = isMemoryMode()
+      ? await compareMemoryPassword(user, password)
+      : await user.comparePassword(password);
 
     if (!passwordMatches) {
       return res.status(401).json({ message: "Invalid email or password." });

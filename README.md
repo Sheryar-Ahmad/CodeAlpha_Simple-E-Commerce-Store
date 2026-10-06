@@ -114,6 +114,22 @@ npm run dev
 
 MongoDB must be running before seeding or starting the backend. The default API URL used by the frontend is `http://localhost:5000/api`.
 
+On Windows PowerShell, you can also start from the project root:
+
+```powershell
+.\start-backend.ps1
+```
+
+This starts the API in memory mode, so it works even if MongoDB is not installed. Data resets when the server stops.
+
+To use real MongoDB instead:
+
+```powershell
+.\start-backend.ps1 -UseMongo
+```
+
+If Mongo mode shows `MongoDB connection failed`, the code is not the issue. MongoDB is not running locally, or `server/.env` needs a valid MongoDB Atlas connection string.
+
 ## Repository structure
 
 ```text
@@ -134,6 +150,7 @@ CodeAlpha_Simple-E-Commerce-Store/
 ├── server/
 │   ├── package.json
 │   └── src/
+├── start-backend.ps1
 ├── .gitignore
 └── README.md
 ```

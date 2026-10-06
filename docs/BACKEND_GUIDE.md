@@ -169,6 +169,28 @@ npm run dev
 
 MongoDB must be running before `npm run seed` or `npm run dev`.
 
+If you are in `E:\CodeAlpha_Projects`, first move into the project:
+
+```powershell
+cd ".\Simple E-Commerce Store"
+```
+
+Then you can run:
+
+```powershell
+.\start-backend.ps1
+```
+
+This starts memory mode. Memory mode is useful for learning and testing because it does not require MongoDB. The data resets when you stop the backend.
+
+To run the real MongoDB version later:
+
+```powershell
+.\start-backend.ps1 -UseMongo
+```
+
+If Mongo mode says `MongoDB connection failed`, install/start MongoDB locally or replace `MONGODB_URI` in `server/.env` with a MongoDB Atlas URI.
+
 ## 10. What to explain in your demo
 
 Say this in simple words:

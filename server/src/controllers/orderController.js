@@ -1,5 +1,12 @@
 import { Order } from "../models/Order.js";
 import { Product } from "../models/Product.js";
+import {
+  createMemoryOrder,
+  getMemoryOrderById,
+  getMemoryOrdersByUser,
+  getMemoryProducts,
+  isMemoryMode
+} from "../data/memoryStore.js";
 
 const DELIVERY_CHARGE = 200;
 const MAX_QUANTITY = 10;
@@ -71,10 +78,12 @@ export async function createOrder(req, res, next) {
       return res.status(400).json({ message: "Add at least one valid product before placing an order." });
     }
 
-    const products = await Product.find({
-      slug: { $in: [...quantitiesBySlug.keys()] },
-      isActive: true
-    });
+    const products = isMemoryMode()
+      ? getMemoryProducts().filter((product) => quantitiesBySlug.has(product.slug))
+      : await Product.find({
+          slug: { $in: [...quantitiesBySlug.keys()] },
+          isActive: true
+        });
 
     if (products.length !== quantitiesBySlug.size) {
       return res.status(400).json({ message: "One or more products are no longer available." });
@@ -106,7 +115,7 @@ export async function createOrder(req, res, next) {
     const subtotal = orderItems.reduce((total, item) => total + item.price * item.quantity, 0);
     const deliveryCharge = subtotal > 0 ? DELIVERY_CHARGE : 0;
 
-    const order = await Order.create({
+    const orderInput = {
       user: req.user._id,
       items: orderItems,
       shippingAddress,
@@ -114,7 +123,9 @@ export async function createOrder(req, res, next) {
       subtotal,
       deliveryCharge,
       total: subtotal + deliveryCharge
-    });
+    };
+
+    const order = isMemoryMode() ? createMemoryOrder(orderInput) : await Order.create(orderInput);
 
     return res.status(201).json({ order });
   } catch (error) {
@@ -124,10 +135,12 @@ export async function createOrder(req, res, next) {
 
 export async function getMyOrders(req, res, next) {
   try {
-    const orders = await Order.find({ user: req.user._id })
-      .select("items subtotal deliveryCharge total status createdAt")
-      .sort({ createdAt: -1 })
-      .lean();
+    const orders = isMemoryMode()
+      ? getMemoryOrdersByUser(req.user._id)
+      : await Order.find({ user: req.user._id })
+          .select("items subtotal deliveryCharge total status createdAt")
+          .sort({ createdAt: -1 })
+          .lean();
 
     return res.json({ orders });
   } catch (error) {
@@ -137,10 +150,12 @@ export async function getMyOrders(req, res, next) {
 
 export async function getOrderById(req, res, next) {
   try {
-    const order = await Order.findOne({
-      _id: req.params.id,
-      user: req.user._id
-    }).lean();
+    const order = isMemoryMode()
+      ? getMemoryOrderById(req.params.id, req.user._id)
+      : await Order.findOne({
+          _id: req.params.id,
+          user: req.user._id
+        }).lean();
 
     if (!order) {
       return res.status(404).json({ message: "Order not found." });

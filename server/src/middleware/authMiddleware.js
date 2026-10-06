@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 
+import { findMemoryUserById, isMemoryMode } from "../data/memoryStore.js";
 import { User } from "../models/User.js";
 
 export async function protect(req, res, next) {
@@ -12,7 +13,9 @@ export async function protect(req, res, next) {
     }
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(payload.userId).select("_id fullName email role").lean();
+    const user = isMemoryMode()
+      ? findMemoryUserById(payload.userId)
+      : await User.findById(payload.userId).select("_id fullName email role").lean();
 
     if (!user) {
       return res.status(401).json({ message: "Authentication required." });
