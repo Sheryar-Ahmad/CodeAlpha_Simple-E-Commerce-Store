@@ -542,8 +542,8 @@ function renderConfirmationPage() {
   }
 
   document.querySelector("[data-order-reference]").textContent = order.reference;
-  document.querySelector("[data-order-status]").textContent = "Demo order placed";
-  document.querySelector("[data-order-address]").textContent = `${order.customer.street}, ${order.customer.city}, ${order.customer.region}, ${order.customer.country}`;
+  document.querySelector("[data-order-status]").textContent = order.status;
+  document.querySelector("[data-order-address]").textContent = `${order.shippingAddress.street}, ${order.shippingAddress.city}, ${order.shippingAddress.region}, ${order.shippingAddress.country}`;
 
   orderItems.replaceChildren();
   order.items.forEach((item) => {
