@@ -112,7 +112,7 @@ npm run seed
 npm run dev
 ```
 
-MongoDB must be running before seeding or starting the backend. The default API URL used by the frontend is `http://localhost:5000/api`.
+MongoDB must be running before seeding or starting the backend. The default API URL used by the frontend is `http://localhost:5001/api`.
 
 On Windows PowerShell, you can also start from the project root:
 

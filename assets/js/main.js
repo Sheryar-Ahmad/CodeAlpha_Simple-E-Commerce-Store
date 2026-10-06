@@ -11,6 +11,8 @@
 
 const CART_STORAGE_KEY = "simpleStoreCart";
 const ORDER_STORAGE_KEY = "simpleStoreLatestOrder";
+const AUTH_STORAGE_KEY = "simpleStoreAuth";
+const API_BASE_URL = "http://localhost:5001/api";
 const DELIVERY_CHARGE = 200;
 const MAX_QUANTITY = 10;
 
