@@ -9,6 +9,13 @@ import authRoutes from "./routes/authRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 
+const allowedOrigins = new Set([
+  process.env.CLIENT_ORIGIN,
+  "http://localhost:5500",
+  "http://127.0.0.1:5500",
+  "null"
+].filter(Boolean));
+
 export function createApp() {
   const app = express();
 
@@ -17,7 +24,14 @@ export function createApp() {
 
   app.use(
     cors({
-      origin: process.env.CLIENT_ORIGIN || "*",
+      origin(origin, callback) {
+        if (!origin || allowedOrigins.has(origin)) {
+          callback(null, true);
+          return;
+        }
+
+        callback(new Error("This origin is not allowed by CORS."));
+      },
       methods: ["GET", "POST", "PATCH", "DELETE"],
       allowedHeaders: ["Content-Type", "Authorization"]
     })
