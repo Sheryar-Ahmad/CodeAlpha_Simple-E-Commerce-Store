@@ -46,6 +46,23 @@ export function createApp() {
     })
   );
 
+  app.get("/api", (req, res) => {
+    res.json({
+      service: "Simple Store API",
+      status: "ok",
+      routes: {
+        health: "GET /api/health",
+        products: "GET /api/products",
+        productDetails: "GET /api/products/:slug",
+        register: "POST /api/auth/register",
+        login: "POST /api/auth/login",
+        currentUser: "GET /api/auth/me",
+        orders: "GET /api/orders, POST /api/orders",
+        orderDetails: "GET /api/orders/:id"
+      }
+    });
+  });
+
   app.get("/api/health", (req, res) => {
     res.json({
       status: "ok",
