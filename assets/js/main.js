@@ -1,7 +1,7 @@
 /*
   Simple Store front-end behavior
   --------------------------------
-  This file keeps the first JavaScript milestone small and readable:
+  I keep shared page behavior here so the cart works across all pages:
   - product data lives in one catalog object
   - cart and auth data are saved in localStorage
   - checkout sends real orders to the Express API when a user is logged in
@@ -70,6 +70,8 @@ async function apiRequest(path, options = {}) {
   const data = await response.json().catch(() => ({}));
 
   if (!response.ok) {
+    // Clear expired sessions so I can log in again.
+    if (response.status === 401 && token) clearAuth();
     throw new Error(data.message || "Something went wrong. Please try again.");
   }
 
@@ -130,6 +132,8 @@ function saveAuth(auth) {
 }
 
 function clearAuth() {
+  // Keep the previous customer's order private on shared browsers.
+  localStorage.removeItem(ORDER_STORAGE_KEY);
   localStorage.removeItem(AUTH_STORAGE_KEY);
   updateAuthNavigation();
 }
@@ -224,7 +228,7 @@ function updateCartCount() {
 function updateAuthNavigation() {
   const auth = getStoredAuth();
   const loginLinks = document.querySelectorAll('a[href="login.html"]');
-  const registerLinks = document.querySelectorAll('a[href="register.html"]');
+  const registerLinks = document.querySelectorAll('a[href="register.html"], [data-logout]');
 
   loginLinks.forEach((link) => {
     link.textContent = auth ? auth.user.fullName : "Log in";
@@ -466,7 +470,7 @@ async function placeOrder(form) {
 
     localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(data.order));
     saveCart({});
-    window.location.href = "order-confirmation.html";
+    window.location.href = `order-confirmation.html?order=${encodeURIComponent(data.order._id)}`;
   } catch (error) {
     showCheckoutError(error.message);
     submitButton.disabled = false;
@@ -527,20 +531,38 @@ function getStoredOrder() {
   }
 }
 
-function renderConfirmationPage() {
+async function renderConfirmationPage() {
   const orderItems = document.querySelector("[data-confirmation-items]");
 
   if (!orderItems) {
     return;
   }
 
-  const order = getStoredOrder();
+  const message = document.querySelector("[data-order-message]");
+  const updates = document.querySelector("[data-order-updates]");
+  const orderId = new URLSearchParams(window.location.search).get("order");
+  let order = null;
+  // Let the API check ownership before showing a confirmed order.
+  if (getStoredAuth() && orderId) {
+    message.textContent = "Loading your order...";
+    try {
+      const data = await apiRequest(`/orders/${encodeURIComponent(orderId)}`);
+      localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(data.order));
+      order = getStoredOrder();
+    } catch (error) {
+      message.textContent = error.message;
+    }
+  } else {
+    message.textContent = "Complete checkout to see your order confirmation.";
+  }
 
   if (!order) {
     updateSummaryTotals({ subtotal: 0, delivery: 0, total: 0 });
     return;
   }
 
+  message.textContent = "Thank you! Your order has been saved.";
+  updates.textContent = "Payment is due on delivery. Keep your order reference for your records.";
   document.querySelector("[data-order-reference]").textContent = order.reference;
   document.querySelector("[data-order-status]").textContent = order.status;
   document.querySelector("[data-order-address]").textContent = `${order.shippingAddress.street}, ${order.shippingAddress.city}, ${order.shippingAddress.region}, ${order.shippingAddress.country}`;
@@ -576,7 +598,8 @@ function bindProductButtons() {
 }
 
 function bindCartActions() {
-  document.addEventListener("input", (event) => {
+  // Rebuild the row after editing so typing does not lose focus.
+  document.addEventListener("change", (event) => {
     const input = event.target.closest("[data-cart-quantity]");
 
     if (input) {
@@ -614,6 +637,10 @@ function bindAuthForms() {
 
       const formData = new FormData(loginForm);
 
+      const button = event.currentTarget.querySelector('button[type="submit"]');
+      // Disable the button while waiting so I don't submit the form twice.
+      if (button.disabled) return;
+      button.disabled = true;
       try {
         const auth = await apiRequest("/auth/login", {
           method: "POST",
@@ -628,6 +655,8 @@ function bindAuthForms() {
         window.location.href = getCartItems().length > 0 ? "checkout.html" : "index.html";
       } catch (error) {
         showFormError(loginForm, error.message);
+      } finally {
+        button.disabled = false;
       }
     });
   }
@@ -651,6 +680,10 @@ function bindAuthForms() {
         return;
       }
 
+      const button = event.currentTarget.querySelector('button[type="submit"]');
+      // Disable the button while waiting so I don't submit the form twice.
+      if (button.disabled) return;
+      button.disabled = true;
       try {
         const auth = await apiRequest("/auth/register", {
           method: "POST",
@@ -666,6 +699,8 @@ function bindAuthForms() {
         window.location.href = getCartItems().length > 0 ? "checkout.html" : "index.html";
       } catch (error) {
         showFormError(registerForm, error.message);
+      } finally {
+        button.disabled = false;
       }
     });
   }

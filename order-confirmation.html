@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Preview an order reference, item summary, and delivery status layout.">
     <meta name="robots" content="noindex, nofollow">
-    <title>Order Confirmation Preview | Simple Store</title>
+    <title>Order Confirmation | Simple Store</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="assets/js/main.js" defer></script>
   </head>
@@ -30,7 +30,7 @@
     <main id="main-content" tabindex="-1">
       <p class="eyebrow">The final step</p>
       <h1>Order confirmation</h1>
-      <p class="preview-note">This page shows the latest order returned by the local Express API. Keep the backend and MongoDB running while testing.</p>
+      <p data-order-message role="status">Complete checkout to see your order confirmation.</p>
 
       <div class="confirmation-grid">
         <section class="panel" aria-labelledby="order-title">
@@ -66,7 +66,7 @@
       </div>
       <section class="panel updates-panel" aria-labelledby="next-title">
         <h2 id="next-title">Order updates</h2>
-        <p>Order progress emails are not implemented yet, but the submitted order is saved by the API when MongoDB is running.</p>
+        <p data-order-updates>Your order status will appear here after checkout.</p>
       </section>
       <a class="button" href="index.html#products">Continue browsing</a>
       <a class="button button-secondary" href="checkout.html">Back to checkout</a>

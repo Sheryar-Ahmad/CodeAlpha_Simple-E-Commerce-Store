@@ -13,6 +13,8 @@ const allowedOrigins = new Set([
   process.env.CLIENT_ORIGIN,
   "http://localhost:5500",
   "http://127.0.0.1:5500",
+  "http://localhost:5501",
+  "http://127.0.0.1:5501",
   "null"
 ].filter(Boolean));
 
@@ -20,6 +22,7 @@ export function createApp() {
   const app = express();
 
   app.use(helmet());
+  // Small request limits stop unexpectedly large form submissions.
   app.use(express.json({ limit: "10kb" }));
 
   app.use(
@@ -75,6 +78,7 @@ export function createApp() {
   app.use("/api/products", productRoutes);
 
   app.use(notFound);
+  // Keep these last so route failures reach one shared error handler.
   app.use(errorHandler);
 
   return app;

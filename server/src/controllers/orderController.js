@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Order } from "../models/Order.js";
 import { Product } from "../models/Product.js";
 import {
@@ -12,7 +13,7 @@ const DELIVERY_CHARGE = 200;
 const MAX_QUANTITY = 10;
 
 function cleanString(value, maxLength) {
-  return String(value || "").trim().slice(0, maxLength);
+  return typeof value === "string" ? value.trim().slice(0, maxLength) : "";
 }
 
 function cleanQuantity(value) {
@@ -52,8 +53,15 @@ function hasRequiredAddressFields(address) {
 
 export async function createOrder(req, res, next) {
   try {
-    const requestedItems = Array.isArray(req.body.items) ? req.body.items : [];
-    const shippingAddress = cleanShippingAddress(req.body.shippingAddress || {});
+    const requestedItems = Array.isArray(req.body?.items) ? req.body.items : [];
+    // Reject invalid items instead of silently changing the customer's quantity.
+    if (requestedItems.length > 50 || requestedItems.some((item) =>
+      !item || typeof item.slug !== "string" || !Number.isInteger(item.quantity) ||
+      item.quantity < 1 || item.quantity > MAX_QUANTITY
+    )) {
+      return res.status(400).json({ message: "Use valid products and whole quantities from 1 to 10." });
+    }
+    const shippingAddress = cleanShippingAddress(req.body?.shippingAddress || {});
 
     if (requestedItems.length === 0) {
       return res.status(400).json({ message: "Add at least one product before placing an order." });
@@ -70,7 +78,7 @@ export async function createOrder(req, res, next) {
 
       if (slug) {
         const nextQuantity = (quantitiesBySlug.get(slug) || 0) + cleanQuantity(item.quantity);
-        quantitiesBySlug.set(slug, Math.min(nextQuantity, MAX_QUANTITY));
+        quantitiesBySlug.set(slug, nextQuantity);
       }
     });
 
@@ -78,6 +86,10 @@ export async function createOrder(req, res, next) {
       return res.status(400).json({ message: "Add at least one valid product before placing an order." });
     }
 
+    if ([...quantitiesBySlug.values()].some((quantity) => quantity > MAX_QUANTITY)) {
+      return res.status(400).json({ message: "The maximum quantity per product is 10." });
+    }
+    // Get prices from the database so browser-supplied totals cannot change the bill.
     const products = isMemoryMode()
       ? getMemoryProducts().filter((product) => quantitiesBySlug.has(product.slug))
       : await Product.find({
@@ -150,6 +162,10 @@ export async function getMyOrders(req, res, next) {
 
 export async function getOrderById(req, res, next) {
   try {
+    if (!isMemoryMode() && !mongoose.isValidObjectId(req.params.id)) {
+      return res.status(400).json({ message: "Invalid order reference." });
+    }
+    // Match the customer too, so an order ID cannot expose someone else's order.
     const order = isMemoryMode()
       ? getMemoryOrderById(req.params.id, req.user._id)
       : await Order.findOne({

@@ -10,6 +10,7 @@ import {
 import { createToken } from "../utils/tokens.js";
 
 function sendAuthResponse(res, user, statusCode = 200) {
+  // Return only public account fields; passwords never go back to the browser.
   const token = createToken(user);
 
   res.status(statusCode).json({

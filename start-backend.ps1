@@ -1,5 +1,6 @@
 param(
-  [switch]$UseMongo
+  [switch]$UseMongo,
+  [switch]$Memory
 )
 
 Set-StrictMode -Version Latest
@@ -28,7 +29,9 @@ try {
   }
 
   Write-Host ""
-  if ($UseMongo) {
+  # MongoDB is normal startup; memory mode is only for temporary demos.
+  if (-not $Memory) {
+    $env:USE_MEMORY_DB = "false"
     Write-Host "Starting Simple Store API with MongoDB..."
     Write-Host "If this fails with MongoDB connection failed, start MongoDB or update server/.env MONGODB_URI."
     npm run dev

@@ -120,7 +120,7 @@ On Windows PowerShell, you can also start from the project root:
 .\start-backend.ps1
 ```
 
-This starts the API in memory mode, so it works even if MongoDB is not installed. Data resets when the server stops.
+This starts the API with MongoDB and keeps saved data after restart. For a temporary demo without MongoDB, use `.\start-backend.ps1 -Memory`; demo data resets when the server stops.
 
 To use real MongoDB instead:
 
@@ -129,6 +129,14 @@ To use real MongoDB instead:
 ```
 
 If Mongo mode shows `MongoDB connection failed`, the code is not the issue. MongoDB is not running locally, or `server/.env` needs a valid MongoDB Atlas connection string.
+
+Start the frontend in a second terminal:
+
+```powershell
+.\start-frontend.ps1
+```
+
+Then open `http://localhost:5501/index.html`. Use `5501` if an old server is stuck on `5500`.
 
 ## Repository structure
 
@@ -200,7 +208,7 @@ These are initial foundations. Accessibility conformance, search rankings, perfo
 
 ## Verification
 
-There is no automated test suite yet. The current storefront can be reviewed with these checks:
+Run `npm test` from `server/` with local MongoDB running. The API integration test uses a separate temporary database and checks authentication, order ownership, totals, persistence, and invalid requests. Review the browser with these checks:
 
 | Check | How to verify | Expected result |
 | --- | --- | --- |
