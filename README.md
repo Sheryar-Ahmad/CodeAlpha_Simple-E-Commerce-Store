@@ -22,7 +22,7 @@ The catalog includes an Everyday Backpack, Study Notebook, and Desk Lamp, priced
 
 Built for **Task 1: Simple E-Commerce Store** in the CodeAlpha Full Stack Development internship. The frontend uses vanilla JavaScript and has no build step; React is not used.
 
-> **Current status:** runnable locally with MongoDB. Online payments, email notifications, admin tools, are optional extensions outside the learning scope. See [current limitations](#current-limitations) before using this as a real store.
+> **Current status:** runnable locally with MongoDB. Online payments, email notifications, and admin tools are optional extensions outside the learning scope. See [current limitations](#current-limitations) before using this as a real store.
 
 ## Contents
 
@@ -194,8 +194,8 @@ CodeAlpha_Simple-E-Commerce-Store/
 ├── docs/
 │   ├── BACKEND_GUIDE.md
 │   └── FIXES_AND_TESTING.md
-├── start-backend.ps1
-└── start-frontend.ps1
+├── LICENSE
+└── README.md
 ```
 
 ## API reference
