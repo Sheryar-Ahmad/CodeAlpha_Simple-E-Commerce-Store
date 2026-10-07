@@ -1,4 +1,4 @@
-<div align="center">
+﻿<div align="center">
 
 # Simple Store — E-Commerce Website
 
@@ -16,236 +16,303 @@ CodeAlpha Full Stack Development Internship · October 2026
 
 ## Project overview
 
-Simple Store is an e-commerce website for browsing everyday products, managing a shopping cart, and placing orders. The project is being developed toward a complete shopping experience, covering both the customer-facing storefront and the backend services needed to manage products, accounts, and orders.
+**Simple Store is a full-stack e-commerce learning project built with HTML, CSS, JavaScript, Node.js, Express, and MongoDB.** Customers can browse everyday essentials, manage a cart, register or sign in, and place cash-on-delivery orders with persistent storage.
 
-The current catalog introduces study and workspace essentials with prices in Pakistani rupees (PKR). The implementation starts with semantic HTML and separate locations for styles, scripts, and product images.
+The catalog includes an Everyday Backpack, Study Notebook, and Desk Lamp, priced in Pakistani rupees (PKR). The project follows a purchase from product discovery to an authenticated order confirmation, keeping frontend interactions separate from backend validation and database operations.
 
-This repository contains **Task 1: Simple E-Commerce Store** for the CodeAlpha Full Stack Development internship.
+Built for **Task 1: Simple E-Commerce Store** in the CodeAlpha Full Stack Development internship. The frontend uses vanilla JavaScript and has no build step; React is not used.
 
-## Project status
+> **Current status:** runnable locally with MongoDB. Online payments, email notifications, admin tools, and live deployment are not implemented. See [current limitations](#current-limitations) before using this as a real store.
 
-| Item | Current state |
+## Contents
+
+[Features](#features) · [Getting started](#getting-started) · [Configuration](#configuration) · [Architecture](#architecture) · [API reference](#api-reference) · [Testing](#testing) · [Roadmap](#roadmap)
+
+## Features
+
+| Area | What works |
 | --- | --- |
-| Development stage | Full-stack e-commerce foundation complete |
-| Available pages | Homepage, product details, cart, checkout, confirmation, login, and registration |
-| Visual design | Navy-and-cream theme, responsive product layouts, and styled account, cart, and checkout screens |
-| Shopping functionality | Browser-saved cart, quantity updates, cart totals, authenticated checkout, and saved orders |
-| Backend and database | Express API, MongoDB models, JWT auth, product seeding, and protected order routes |
-| Deployment | No live deployment configured |
+| Storefront | Seven connected pages, product imagery, descriptions, and product detail anchors |
+| Shopping cart | Add, remove, clear, and edit quantities; browser persistence; PKR totals and delivery charge |
+| Accounts | Registration, login, bcrypt password hashing, JWT authentication, and logout |
+| Checkout | Required delivery fields, protected order submission, and prices recalculated by the backend |
+| Confirmation | Fetches the saved order from the API and checks customer ownership before displaying it |
+| Database | Mongoose models for products, users, and orders; product seeding; customer order indexes |
+| Interface | Responsive layouts, labelled forms, visible keyboard focus, skip links, and reduced-motion support |
+| Error handling | Form feedback, invalid-order checks, duplicate-email handling, and readable startup errors |
 
-> This is a learning-focused full-stack project. It supports local account creation, login, product seeding, and order saving with MongoDB. Payments are represented as cash on delivery; no real payment gateway is connected.
-
-## Features and scope
-
-### Available now
-
-- **Responsive design:** mobile-first layouts, flexible navigation, product grids, and a cart table that scrolls within its panel.
-- **Consistent styling:** shared color variables, reusable buttons and panels, readable forms, and coordinated page layouts.
-- **Keyboard and motion support:** visible focus outlines, a focus-revealed skip link, and reduced-motion preferences.
-- **Product imagery:** supplied backpack, notebook, and lamp images on the homepage and product details, plus a study-space banner.
-- **Product listings:** product names, descriptions, and prices for an Everyday Backpack, Study Notebook, and Desk Lamp.
-- **Cart interactions:** add products, update quantities, remove items, clear the cart, and review calculated totals.
-- **Browser persistence:** cart data is saved with `localStorage` and validated before being rendered.
-- **Authenticated checkout:** submit delivery details and cart items to the Express API.
-- **Backend order processing:** recalculate product prices server-side before saving orders.
-- **User accounts:** registration and login with password hashing and JWT-based authentication.
-- **Product API:** MongoDB product model, product routes, and seed data for the storefront catalog.
-- **Store navigation:** connected shopping and account pages, with matching product detail anchors.
-- **Account forms:** labelled registration and login fields connected to the local backend API.
-- **Semantic structure:** distinct header, navigation, main content, product articles, and footer.
-- **Keyboard navigation groundwork:** a skip link that moves focus to the main content.
-- **Page metadata:** a descriptive title, meta description, document language, and viewport setting.
-- **Organized source:** separate files for HTML, CSS, and JavaScript.
-
-### Planned shopping experience
-
-| Feature | Intended behavior |
-| --- | --- |
-| Product details | View a product's description, image, price, and availability |
-| Shopping cart | Add or remove products, update quantities, and review totals |
-| User accounts | Register, sign in, and receive a JWT |
-| Order processing | Submit a cart through a protected backend route and receive an order confirmation |
-| Persistent data | Store products, users, and orders in MongoDB |
-
-The current backend covers the required e-commerce foundation. Admin tools, payment gateway integration, emails, and production deployment are future improvements.
-
-## Technology
-
-| Layer | Technology | Status |
-| --- | --- | --- |
-| Page structure | HTML5 | Implemented |
-| Styling | CSS | Implemented with Grid, Flexbox, custom properties, and media queries |
-| Browser interactions | JavaScript | Implemented with DOM events, localStorage, auth token storage, cart totals, and API submission |
-| Version control | Git and GitHub | In use |
-| Backend | Node.js and Express | Implemented with product, auth, and order APIs |
-| Database | MongoDB and Mongoose | Implemented with Product, User, and Order models |
-
-The frontend has no build step. The backend uses npm dependencies inside the `server` folder.
+The project is useful for studying how a plain JavaScript storefront communicates with an Express REST API and how MongoDB stores customer and order data. It is intentionally small enough to trace the complete purchase flow in code.
 
 ## Getting started
 
 ### Prerequisites
 
-- Git, if cloning from the terminal.
-- A web browser.
+- Node.js and npm. The project has been run with Node.js 20.19.2.
+- MongoDB Server running locally on port `27017`; Compass is an optional database viewer.
+- Python with the Windows `py` launcher for the supplied frontend script.
+- Git, PowerShell, and a modern browser for the steps below.
 
-### Download the source
+### 1. Clone and install
 
-```bash
-git clone https://github.com/Sheryar-Ahmad/CodeAlpha_Simple-E-Commerce-Store.git
-cd CodeAlpha_Simple-E-Commerce-Store
-```
-
-Alternatively, download the repository using **Code → Download ZIP** and extract it.
-
-### Open the storefront
-
-Open [index.html](index.html) in your browser. On Windows, you can double-click the file in File Explorer.
-
-To test the full-stack flow, run the backend first:
-
-```bash
-cd server
-npm install
-copy .env.example .env
-npm run seed
-npm run dev
-```
-
-MongoDB must be running before seeding or starting the backend. The default API URL used by the frontend is `http://localhost:5001/api`.
-
-On Windows PowerShell, you can also start from the project root:
+Run in **Windows PowerShell**:
 
 ```powershell
+git clone https://github.com/Sheryar-Ahmad/CodeAlpha_Simple-E-Commerce-Store.git
+cd CodeAlpha_Simple-E-Commerce-Store
+cd server
+npm ci
+```
+
+### 2. Configure the backend
+
+For a fresh clone, copy the example configuration:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+If `.env` already exists, edit it instead of overwriting it. Set `MONGODB_URI` to your local database and replace the `JWT_SECRET` placeholder with a long random value. Generate one locally with:
+
+```powershell
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
+
+Paste the result into `server/.env`. Set `CLIENT_ORIGIN=http://localhost:5501` to match the frontend address. Keep the real `.env` private; Git ignores it.
+
+### 3. Seed the catalog and start the backend
+
+With MongoDB running, from `server/`:
+
+```powershell
+npm run seed
+cd ..
 .\start-backend.ps1
 ```
 
-This starts the API with MongoDB and keeps saved data after restart. For a temporary demo without MongoDB, use `.\start-backend.ps1 -Memory`; demo data resets when the server stops.
+**Seed warning:** the current seed script deletes existing products before inserting the sample catalog. Use it for initial setup, not as a routine restart command.
 
-To use real MongoDB instead:
+Expected startup messages:
 
-```powershell
-.\start-backend.ps1 -UseMongo
+```text
+MongoDB connected: simple_store
+Simple Store API running on port 5001
 ```
 
-If Mongo mode shows `MongoDB connection failed`, the code is not the issue. MongoDB is not running locally, or `server/.env` needs a valid MongoDB Atlas connection string.
+### 4. Start the frontend
 
-Start the frontend in a second terminal:
+Open a **second PowerShell terminal** in the repository root:
 
 ```powershell
 .\start-frontend.ps1
 ```
 
-Then open `http://localhost:5501/index.html`. Use `5501` if an old server is stuck on `5500`.
+Open **[http://localhost:5501/index.html](http://localhost:5501/index.html)**. Keep both terminals open. The frontend script always serves the project folder, avoiding missing-page errors caused by serving its parent folder.
 
-## Repository structure
+### 5. Try the purchase flow
+
+1. Add a product and open Cart.
+2. Edit quantities and review the total.
+3. Register or log in, then complete the delivery form.
+4. Place the order and review its confirmation.
+5. Refresh confirmation to retrieve the saved order again.
+6. In Compass, connect to `mongodb://127.0.0.1:27017` and inspect `simple_store`.
+
+For a temporary demo without MongoDB, run `.\start-backend.ps1 -Memory`. Its accounts and orders disappear when the process stops. Normal startup uses MongoDB; the older `-UseMongo` flag remains supported.
+
+## Configuration
+
+Configuration lives in `server/.env`; the committed template is [server/.env.example](server/.env.example).
+
+| Variable | Purpose | Example / behavior |
+| --- | --- | --- |
+| `PORT` | API listening port | `5001`; keep the frontend API URL in sync if changed |
+| `NODE_ENV` | Controls error detail | `development`; production responses omit stack traces |
+| `MONGODB_URI` | Database connection | `mongodb://127.0.0.1:27017/simple_store` |
+| `JWT_SECRET` | Signs login tokens | Required; replace the example placeholder |
+| `JWT_EXPIRES_IN` | Token lifetime | `7d` default |
+| `CLIENT_ORIGIN` | Allowed frontend origin | `http://localhost:5501` for the supplied frontend script |
+| `USE_MEMORY_DB` | Temporary demo storage | `true` enables memory storage; normal startup sets `false` |
+
+The frontend's `API_BASE_URL` is currently defined in [assets/js/main.js](assets/js/main.js) as `http://localhost:5001/api`. The API also allows the local development origins on ports `5500` and `5501`.
+
+## Architecture
+
+```mermaid
+flowchart LR
+    Customer[Customer browser] --> Pages[HTML and CSS]
+    Pages --> JS[Vanilla JavaScript]
+    JS <--> Cart[localStorage cart and session]
+    JS --> API[Express REST API]
+    API --> Auth[JWT authentication and validation]
+    Auth --> Models[Mongoose models]
+    Models --> DB[(MongoDB)]
+    Compass[MongoDB Compass] --> DB
+```
+
+The cart is stored in the browser. Checkout sends product identifiers, quantities, and delivery details to the backend. The backend authenticates the customer, validates input, looks up product prices, and saves the order. Confirmation retrieves the order through an ownership-protected endpoint.
+
+Order items store a snapshot of names and prices, so later product edits do not rewrite an existing order's purchase details. Passwords are hashed before storage and excluded from authentication responses.
+
+### Technology stack
+
+| Layer | Technologies |
+| --- | --- |
+| Frontend | Semantic HTML5, CSS Grid/Flexbox, custom properties, vanilla JavaScript, Fetch API |
+| API | Node.js, Express, JWT, bcryptjs, validator |
+| Data | MongoDB, Mongoose |
+| Request protection | Helmet, CORS, request size limits, rate limiting |
+| Development | npm, nodemon, PowerShell startup scripts, Git |
+| Tests | Node.js built-in test runner, HTTP requests, local MongoDB |
+
+### Repository structure
 
 ```text
 CodeAlpha_Simple-E-Commerce-Store/
-├── index.html
-├── product.html
+├── index.html                     # Catalog and homepage
+├── product.html                   # Product detail sections
 ├── cart.html
 ├── checkout.html
 ├── order-confirmation.html
-├── login.html
-├── register.html
+├── login.html / register.html
 ├── assets/
-│   ├── css/style.css
-│   ├── js/main.js
-│   └── images/
-├── docs/
-│   └── BACKEND_GUIDE.md
+│   ├── css/style.css               # Shared styles and responsive layouts
+│   ├── js/main.js                  # Cart, accounts, checkout, confirmation
+│   └── images/                     # Original product and banner PNGs
 ├── server/
-│   ├── package.json
-│   └── src/
+│   ├── .env.example
+│   ├── package.json / package-lock.json
+│   ├── src/
+│   │   ├── app.js / server.js
+│   │   ├── config/                 # Database connection
+│   │   ├── controllers/            # Request handling
+│   │   ├── middleware/             # Authentication and errors
+│   │   ├── models/                 # Product, User, Order
+│   │   ├── routes/                 # API endpoints
+│   │   ├── data/                   # Catalog and demo memory store
+│   │   ├── seed/                   # Sample product setup
+│   │   └── utils/                  # Token creation
+│   └── test/api.test.js
+├── docs/
+│   ├── BACKEND_GUIDE.md
+│   └── FIXES_AND_TESTING.md
 ├── start-backend.ps1
-├── .gitignore
-└── README.md
+└── start-frontend.ps1
 ```
 
-| Path | Responsibility |
+## API reference
+
+Base URL: `http://localhost:5001/api`. Send JSON for POST requests. Protected routes require `Authorization: Bearer <token>`.
+
+| Method | Path | Authentication | Purpose |
+| --- | --- | --- | --- |
+| GET | `/api` | Public | API index |
+| GET | `/api/health` | Public | API response health |
+| GET | `/api/products` | Public | Active products |
+| GET | `/api/products/:slug` | Public | Product details |
+| POST | `/api/auth/register` | Public | Register with `fullName`, `email`, and `password` |
+| POST | `/api/auth/login` | Public | Log in with `email` and `password` |
+| GET | `/api/auth/me` | Required | Current customer |
+| GET | `/api/orders` | Required | Customer's saved orders |
+| POST | `/api/orders` | Required | Submit items and shipping address |
+| GET | `/api/orders/:id` | Required | Retrieve an order owned by the customer |
+
+Registration passwords must be 12–128 characters. Orders accept whole quantities from 1 to 10 per product. Cash on delivery is the supported payment method; the server calculates the price and PKR 200 delivery charge.
+
+Example order body:
+
+```json
+{
+  "items": [{ "slug": "backpack", "quantity": 1 }],
+  "shippingAddress": {
+    "fullName": "Example Customer",
+    "phone": "03001234567",
+    "street": "Example Street",
+    "city": "Islamabad",
+    "region": "ICT",
+    "postalCode": "44000",
+    "country": "Pakistan"
+  },
+  "paymentMethod": "cash-on-delivery"
+}
+```
+
+Check the API in PowerShell:
+
+```powershell
+Invoke-RestMethod http://localhost:5001/api/health
+```
+
+A responding health endpoint does not prove the full purchase flow works. Verify checkout and stored orders as well.
+
+## Testing
+
+From `server/`, with local MongoDB running:
+
+```powershell
+npm test
+```
+
+The integration test creates a separate temporary database and removes it afterward. It checks registration, login, duplicate emails, protected routes, invalid quantities, server-calculated totals, order ownership, malformed JSON, and persistence after reconnecting. It does not replace browser or deployment testing.
+
+Manual checks:
+
+- Add products, edit quantities, remove items, and clear the cart.
+- Register, log out, and log in; check navigation and form errors.
+- Submit an incomplete checkout, then place a valid order.
+- Refresh confirmation; log out and refresh again to check private order display.
+- Check narrow-screen layouts, keyboard focus, and missing assets in browser tools.
+
+See [fixes and testing](docs/FIXES_AND_TESTING.md) for the detailed walkthrough.
+
+### Development commands
+
+Run npm commands inside `server/`:
+
+| Command | Purpose |
 | --- | --- |
-| [index.html](index.html) | Homepage markup, content, navigation, and product listings |
-| [product.html](product.html) | All three product detail sections, each with its own anchor |
-| [cart.html](cart.html) | Browser-rendered basket, quantity controls, totals, removal actions, and empty state |
-| [checkout.html](checkout.html) | Delivery form that submits authenticated orders to the API |
-| [order-confirmation.html](order-confirmation.html) | Latest saved order reference, delivery address, purchased items, and totals |
-| [login.html](login.html) / [register.html](register.html) | Account forms connected to the authentication API |
-| [assets/css/style.css](assets/css/style.css) | Shared design tokens, components, page layouts, responsive rules, and print styles, organized in 14 commented sections |
-| [assets/js/main.js](assets/js/main.js) | Cart storage, auth handling, API calls, checkout submission, and confirmation rendering |
-| [server/](server/) | Express API, Mongoose models, seed data, routes, controllers, and middleware |
-| [docs/BACKEND_GUIDE.md](docs/BACKEND_GUIDE.md) | Beginner-friendly explanation of the backend architecture |
-| `assets/images/` | Supplied product images and two banner options; the alternate banner is not loaded by the pages |
-| [.gitignore](.gitignore) | Excludes environment files, dependencies, build output, and logs |
-| [README.md](README.md) | Public project overview, setup, and implementation status |
+| `npm run dev` | MongoDB API with nodemon |
+| `npm start` | API without automatic restart |
+| `npm run dev:memory` | Temporary memory API with nodemon |
+| `npm run start:memory` | Temporary memory API without automatic restart |
+| `npm run seed` | Replace products with the sample catalog |
+| `npm test` | MongoDB API integration test |
 
-## Image assets
+There is no frontend build command, lint script, Docker configuration, or CI workflow in this repository.
 
-The original PNG files are retained without conversion or compression.
+## Current limitations
 
-| File | Use |
-| --- | --- |
-| `assets/images/123.png` | Alternate banner, retained but not loaded by the pages |
-| `assets/images/456.png` | Homepage study-space banner |
-| `assets/images/131415.png` | Everyday Backpack |
-| `assets/images/101112.png` | Study Notebook |
-| `assets/images/789.png` | Desk Lamp |
-
-The three product images are 1254 × 1254 pixels; both banners are 1774 × 887 pixels. The HTML displays smaller versions with the same proportions. Product images load lazily, but their original download sizes remain unchanged. Web optimization is deferred by choice.
-
-## Accessibility and search foundations
-
-The pages include:
-
-- A document language of English.
-- One main heading, followed by section and product headings.
-- Semantic landmarks that identify each major part of the page.
-- A keyboard-accessible skip link.
-- Descriptive navigation and product-specific button text.
-- A page title and description that explain the storefront's content.
-
-These are initial foundations. Accessibility conformance, search rankings, performance scores, and cross-browser compatibility have not been formally assessed. Product images include descriptive alternatives and width/height attributes. Product images use lazy loading; the homepage banner loads immediately. The responsive stylesheet preserves hidden states and readable disabled controls, provides visible keyboard focus, and respects reduced-motion settings. Cart, checkout, confirmation, and account previews have `noindex` metadata; this is a search-engine instruction, not access control.
-
-## Verification
-
-Run `npm test` from `server/` with local MongoDB running. The API integration test uses a separate temporary database and checks authentication, order ownership, totals, persistence, and invalid requests. Review the browser with these checks:
-
-| Check | How to verify | Expected result |
-| --- | --- | --- |
-| Page loads | Open `index.html` | Store header, three products, about section, and footer appear |
-| Browser title | Inspect the browser tab | “Everyday Essentials \| Simple Store” |
-| Product links | Open each product from the homepage | The matching detail section is targeted |
-| Add to cart | Open `index.html`, choose a product, then open Cart | The product appears in the cart and the nav count updates |
-| Product quantity | Open `product.html`, choose a quantity, and add a product | The selected quantity is saved in the cart |
-| Cart controls | Update quantity, remove an item, or clear the cart | Totals update and empty-cart messaging appears when needed |
-| Register and login | Start the backend, then submit the account forms | A JWT is saved in the browser and navigation updates |
-| Checkout | Log in, fill checkout with cart items present, and place the order | The API saves the order, the cart clears, and confirmation shows the saved order |
-| Checkout validation | Submit checkout with missing required details | The browser shows required-field validation |
-| Skip link | Reload, press Tab, then Enter | Focus moves to the main content |
-| Images | Open the homepage and each product detail section | The banner and matching product images appear without stretching |
-| Responsive layout | Resize from desktop to 320px wide | Navigation wraps, content stacks, and the page has no horizontal scrolling |
-| Cart on mobile | Tab to the cart table region; scroll horizontally | All columns remain reachable inside the table panel |
-| Keyboard focus | Press Tab through links | The focused link has a visible outline |
-| Local assets | Reload with the browser Network panel open, then scroll through the products | Images, stylesheet, and script have no missing-file errors |
-
-This checklist describes expected behavior; it is not a report that every browser has passed testing.
+- **Fixed frontend catalog:** browsing uses static markup and a JavaScript catalog. Editing database products or prices does not automatically update browsing content; checkout prices come from MongoDB.
+- **Inventory:** stock is checked but not reduced or reserved. Concurrent stock allocation needs additional implementation.
+- **Payments and operations:** cash on delivery only; no payment gateway, email delivery, admin dashboard, or customer order-history screen.
+- **Session security:** JWTs use browser localStorage. Production authentication, token handling, and network configuration need review.
+- **Deployment:** no live demo or hosting configuration. Hosting requires a public API URL, an explicit allowed frontend origin, database access controls, HTTPS, and private environment configuration.
+- **Assets and accessibility:** original PNGs are retained; image optimization, formal accessibility assessment, and cross-browser testing remain.
 
 ## Roadmap
 
-1. **Storefront structure — complete:** seven connected HTML pages, sample product details, and labelled forms.
-2. **Visual design — complete for the current preview:** responsive CSS, supplied product imagery, shared components, styled forms, and keyboard focus states.
-3. **Shopping interactions — complete:** cart state, quantity changes, totals, browser persistence, and checkout submission.
-4. **Backend integration — complete for the project scope:** account access, product data, and persistent orders.
-5. **Release preparation** — verify the shopping flow, address security and accessibility issues, deploy, and record the project walkthrough.
+- [x] Semantic storefront and account pages
+- [x] Shared responsive CSS and product imagery
+- [x] Browser cart and JavaScript shopping interactions
+- [x] Express authentication, MongoDB models, and saved orders
+- [x] MongoDB integration tests and ownership-checked confirmation
+- [ ] Connect browsing to the product API and add inventory reservation
+- [ ] Complete browser checks and production security review
+- [ ] Deploy and record the submission walkthrough
 
-## Study plan
+## Documentation and contributions
 
-Review the HTML pages, the commented stylesheet, `assets/js/main.js`, and [docs/BACKEND_GUIDE.md](docs/BACKEND_GUIDE.md) together. The project now has the core MERN-style learning pieces: frontend pages, browser JavaScript, Express routes, MongoDB models, authentication, and order processing.
+Read the [backend guide](docs/BACKEND_GUIDE.md) for a beginner-friendly explanation and [fixes and testing](docs/FIXES_AND_TESTING.md) for practical verification steps.
+
+For a proposed change, fork the repository, create a focused branch, explain the behavior being changed, run relevant tests, and open a pull request. Use clear commit messages such as `fix: handle invalid order quantities`. Keep secrets and generated learning files out of commits.
+
+## License
+
+The backend package metadata declares `MIT`, but the repository does not yet contain a standalone license file. Licensing should be clarified before reuse or redistribution.
 
 ## Author
 
-**Sheheryar Ahmad**
-Software Engineering student at COMSATS University Islamabad
+**Sheheryar Ahmad**  
+Software Engineering student at COMSATS University Islamabad  
 Full Stack Development Intern at CodeAlpha · October 1–30, 2026
 
 [GitHub profile](https://github.com/Sheryar-Ahmad) · [Project repository](https://github.com/Sheryar-Ahmad/CodeAlpha_Simple-E-Commerce-Store)
