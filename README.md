@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
 
 # Simple Store — E-Commerce Website
 
@@ -22,7 +22,7 @@ The catalog includes an Everyday Backpack, Study Notebook, and Desk Lamp, priced
 
 Built for **Task 1: Simple E-Commerce Store** in the CodeAlpha Full Stack Development internship. The frontend uses vanilla JavaScript and has no build step; React is not used.
 
-> **Current status:** runnable locally with MongoDB. Online payments, email notifications, admin tools, and live deployment are not implemented. See [current limitations](#current-limitations) before using this as a real store.
+> **Current status:** runnable locally with MongoDB. Online payments, email notifications, admin tools, are optional extensions outside the learning scope. See [current limitations](#current-limitations) before using this as a real store.
 
 ## Contents
 
@@ -49,7 +49,7 @@ The project is useful for studying how a plain JavaScript storefront communicate
 
 - Node.js and npm. The project has been run with Node.js 20.19.2.
 - MongoDB Server running locally on port `27017`; Compass is an optional database viewer.
-- Python with the Windows `py` launcher for the supplied frontend script.
+- Python with the Windows `py` launcher to serve the frontend locally.
 - Git, PowerShell, and a modern browser for the steps below.
 
 ### 1. Clone and install
@@ -85,8 +85,7 @@ With MongoDB running, from `server/`:
 
 ```powershell
 npm run seed
-cd ..
-.\start-backend.ps1
+npm run dev
 ```
 
 **Seed warning:** the current seed script deletes existing products before inserting the sample catalog. Use it for initial setup, not as a routine restart command.
@@ -100,13 +99,13 @@ Simple Store API running on port 5001
 
 ### 4. Start the frontend
 
-Open a **second PowerShell terminal** in the repository root:
+Open a **second terminal** and change to the repository root:
 
 ```powershell
-.\start-frontend.ps1
+py -m http.server 5501 --bind 127.0.0.1
 ```
 
-Open **[http://localhost:5501/index.html](http://localhost:5501/index.html)**. Keep both terminals open. The frontend script always serves the project folder, avoiding missing-page errors caused by serving its parent folder.
+Open **[http://localhost:5501/index.html](http://localhost:5501/index.html)**. Keep both terminals open. Run the frontend command from the folder containing `index.html`; serving its parent folder causes missing-page errors.
 
 ### 5. Try the purchase flow
 
@@ -117,7 +116,7 @@ Open **[http://localhost:5501/index.html](http://localhost:5501/index.html)**. K
 5. Refresh confirmation to retrieve the saved order again.
 6. In Compass, connect to `mongodb://127.0.0.1:27017` and inspect `simple_store`.
 
-For a temporary demo without MongoDB, run `.\start-backend.ps1 -Memory`. Its accounts and orders disappear when the process stops. Normal startup uses MongoDB; the older `-UseMongo` flag remains supported.
+For a temporary demo without MongoDB, run `npm run dev:memory` inside `server/`. Its accounts and orders disappear when the process stops. For persistent storage, leave `USE_MEMORY_DB` unset or set it to `false` and use `npm run dev`.
 
 ## Configuration
 
@@ -130,8 +129,8 @@ Configuration lives in `server/.env`; the committed template is [server/.env.exa
 | `MONGODB_URI` | Database connection | `mongodb://127.0.0.1:27017/simple_store` |
 | `JWT_SECRET` | Signs login tokens | Required; replace the example placeholder |
 | `JWT_EXPIRES_IN` | Token lifetime | `7d` default |
-| `CLIENT_ORIGIN` | Allowed frontend origin | `http://localhost:5501` for the supplied frontend script |
-| `USE_MEMORY_DB` | Temporary demo storage | `true` enables memory storage; normal startup sets `false` |
+| `CLIENT_ORIGIN` | Allowed frontend origin | `http://localhost:5501` for the local frontend |
+| `USE_MEMORY_DB` | Temporary demo storage | `true` enables memory storage; leave unset or `false` for MongoDB |
 
 The frontend's `API_BASE_URL` is currently defined in [assets/js/main.js](assets/js/main.js) as `http://localhost:5001/api`. The API also allows the local development origins on ports `5500` and `5501`.
 
@@ -161,7 +160,7 @@ Order items store a snapshot of names and prices, so later product edits do not 
 | API | Node.js, Express, JWT, bcryptjs, validator |
 | Data | MongoDB, Mongoose |
 | Request protection | Helmet, CORS, request size limits, rate limiting |
-| Development | npm, nodemon, PowerShell startup scripts, Git |
+| Development | npm, nodemon, Git |
 | Tests | Node.js built-in test runner, HTTP requests, local MongoDB |
 
 ### Repository structure
@@ -285,7 +284,7 @@ There is no frontend build command, lint script, Docker configuration, or CI wor
 - **Inventory:** stock is checked but not reduced or reserved. Concurrent stock allocation needs additional implementation.
 - **Payments and operations:** cash on delivery only; no payment gateway, email delivery, admin dashboard, or customer order-history screen.
 - **Session security:** JWTs use browser localStorage. Production authentication, token handling, and network configuration need review.
-- **Deployment:** no live demo or hosting configuration. Hosting requires a public API URL, an explicit allowed frontend origin, database access controls, HTTPS, and private environment configuration.
+- **Learning scope:** designed to run locally. Deployment is optional and is not part of the completion checklist.
 - **Assets and accessibility:** original PNGs are retained; image optimization, formal accessibility assessment, and cross-browser testing remain.
 
 ## Roadmap
@@ -295,9 +294,10 @@ There is no frontend build command, lint script, Docker configuration, or CI wor
 - [x] Browser cart and JavaScript shopping interactions
 - [x] Express authentication, MongoDB models, and saved orders
 - [x] MongoDB integration tests and ownership-checked confirmation
-- [ ] Connect browsing to the product API and add inventory reservation
-- [ ] Complete browser checks and production security review
-- [ ] Deploy and record the submission walkthrough
+
+The core learning scope is implemented. Before submitting, complete the manual browser checks above and record the required project explanation video. These are review and submission steps, not missing deployment features.
+
+Optional future extensions: API-driven browsing, inventory reservation, an admin dashboard, and email notifications. Deployment can be explored later.
 
 ## Documentation and contributions
 
@@ -307,12 +307,12 @@ For a proposed change, fork the repository, create a focused branch, explain the
 
 ## License
 
-The backend package metadata declares `MIT`, but the repository does not yet contain a standalone license file. Licensing should be clarified before reuse or redistribution.
+Licensed under the [MIT License](LICENSE). Copyright ? 2026 Sheheryar Ahmad. You may use, modify, and distribute the project under the terms in that file.
 
 ## Author
 
-**Sheheryar Ahmad**  
-Software Engineering student at COMSATS University Islamabad  
+**Sheheryar Ahmad**<br>
+Software Engineering student at COMSATS University Islamabad<br>
 Full Stack Development Intern at CodeAlpha · October 1–30, 2026
 
 [GitHub profile](https://github.com/Sheryar-Ahmad) · [Project repository](https://github.com/Sheryar-Ahmad/CodeAlpha_Simple-E-Commerce-Store)

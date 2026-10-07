@@ -158,46 +158,28 @@ The key professional idea is this: the frontend sends what the user wants, but t
 
 ## 9. How to run it locally
 
-From the `server` folder:
+In PowerShell, from the project root:
 
-```bash
-npm install
-copy .env.example .env
+```powershell
+cd server
+npm ci
+Copy-Item .env.example .env
+```
+
+Copy the environment template only during initial setup. Set a private random JWT_SECRET and verify MONGODB_URI in `.env`. Keep MongoDB running. Leave USE_MEMORY_DB unset or false.
+
+```powershell
 npm run seed
 npm run dev
 ```
 
-MongoDB must be running before `npm run seed` or `npm run dev`.
-
-If you are in `E:\CodeAlpha_Projects`, first move into the project:
+Seed only for initial setup: it replaces existing products. In a second terminal, from the project root containing index.html:
 
 ```powershell
-cd ".\Simple E-Commerce Store"
+py -m http.server 5501 --bind 127.0.0.1
 ```
 
-Then you can run:
-
-```powershell
-.\start-backend.ps1
-```
-
-This starts MongoDB mode and keeps saved data after restart. For a temporary demo without MongoDB, use `.\start-backend.ps1 -Memory`. Memory data resets when you stop the backend.
-
-To run the real MongoDB version later:
-
-```powershell
-.\start-backend.ps1 -UseMongo
-```
-
-If Mongo mode says `MongoDB connection failed`, install/start MongoDB locally or replace `MONGODB_URI` in `server/.env` with a MongoDB Atlas URI.
-
-Start the frontend in another terminal:
-
-```powershell
-.\start-frontend.ps1
-```
-
-Open `http://localhost:5501/index.html`. If `localhost:5500` shows a 404, it means an old static server is serving the wrong folder. Use `5501` instead.
+Open http://localhost:5501/index.html. For a temporary demo, use `npm run dev:memory` inside server; demo data resets on restart.
 
 ## 10. What to explain in your demo
 
@@ -210,5 +192,5 @@ Say this in simple words:
 - Admin dashboard for managing products and orders.
 - Better order status management.
 - Email confirmation.
-- Real deployment with environment variables.
+- Optional deployment for further learning.
 - More automated backend tests.

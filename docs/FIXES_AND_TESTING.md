@@ -2,9 +2,9 @@
 
 ## Starting the website
 
-Run `./start-backend.ps1` in PowerShell from the project folder. MongoDB is now the default. The older `-UseMongo` option still works. Use `-Memory` only for a temporary demo whose data disappears on restart.
+From the project folder, run `cd server` then `npm run dev`. Keep MongoDB running and leave USE_MEMORY_DB unset or false in server/.env. Use `npm run dev:memory` only for a temporary demo whose data disappears on restart.
 
-Run `./start-frontend.ps1` in another terminal and open http://localhost:5501/index.html. Keep both terminals open. If a port is already occupied, stop your existing server before starting another.
+Run `py -m http.server 5501 --bind 127.0.0.1` from the project root in another terminal and open http://localhost:5501/index.html. Keep both terminals open. If a port is already occupied, stop your existing server before starting another.
 
 ## What changed and why
 
